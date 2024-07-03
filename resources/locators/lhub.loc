@@ -1,0 +1,27 @@
+# Locator for Demo site : https://www.saucedemo.com/
+# “input”, "textarea", "“link”, “text”, “radioButton”, “checkbox”, “select”, “button”, "tab"
+
+#Common/General - Locators
+#loc.lhub.comm.text.dataloader={"locator":["xpath=//div[@class='ant-spin-text']"],"desc":"Data Loader"}
+#loc.lhub.comm.button.general={"locator":["xpath=(//button[@type='button']//span[text()='${loc.lhub.button.name}'])[${loc.lhub.button.instance}]"],"desc":"Data Loader"}
+#loc.lhub.comm.textarea.general={"locator":["xpath=(//textarea[@id='${loc.lhub.textarea.id}'])[1]"],"desc":"Textarea"}
+#loc.lhub.comm.input.general={"locator":["xpath=(//input[@id='${loc.lhub.input.id}'])[1]"],"desc":"Input "}
+
+#Funding: Home Page - Locators
+#loc.lhub.fundingHome.text.fundingComponent={"locator":["xpath=//span[.='Funding components']"],"desc":"Data Loader"}
+
+#Funding Component: Home Page
+#loc.lhub.fundingComponent.button.create={"locator":["xpath=//button[@type='button']//span[text()='Create']","(xpath=//button[@type='button']//span)[1]"],"desc":"Create Button"}
+
+#Funding Component: Create Page
+#loc.lhub.fundingComponentCreate.input.fundingComponentCode={"locator":["id=code"],"desc":"Input: Funding Component Code"}
+#loc.lhub.fundingComponentCreate.textarea.fundingComponentDescription={"locator":["id=description"],"desc":"Input: Funding Component Description"}
+#loc.lhub.fundingComponentCreate.t.fundingComponentDescription={"locator":["id=description"],"desc":"Input: Funding Component Description"}
+
+#loc.lhub.fundingComponentCreate.textarea.prerequisiteFormula={"locator":["xpath=(//strong[text()='Prerequisite configuration']/following::textarea)[1]"],"desc":"Input | Textarea: Prerequisite Formula Description"}
+#loc.lhub.fundingComponentCreate.textarea.criteriaFormula={"locator":["xpath=(//strong[text()='Criteria configuration']/following::textarea)[1]"],"desc":"Input | Textarea: Criteria Formula Description"}
+#loc.lhub.fundingComponentCreate.textarea.rateFormula={"locator":["xpath=(//strong[text()='Rate configuration']/following::textarea)[1]"],"desc":"Input | Textarea: Criteria Formula Description"}
+
+# Radio Button:  //div[@id="verifySupportingDocs"]//label[1]//span[contains(text(),"Yes")]
+# Radio Button:  //div[@id="verifySupportingDocs"]//label[2]//span[contains(text(),"No")]
+

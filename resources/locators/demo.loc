@@ -1,0 +1,21 @@
+# Locator for Demo site : https://www.saucedemo.com/
+# “Input”, "textarea", "“link”, “text”, “radioButton”, “checkbox”, “select”, “button”, "tab"
+
+
+
+#Login Page
+loc.demo.login.input.username = {"locator":["id=user-name1","name=user-name"],"desc":"Username field"}
+loc.demo.login.input.password = {"locator":["id=password","name=password"],"desc":"Password field"}
+
+loc.demo.login.button.login = {"locator":["id=login-button","name=login-button"],"desc":"Login button"}
+
+#Home Page
+loc.demo.home.text.logo = {"locator":["css=.app_logo"],"desc":"Home Logo Text"}
+
+loc.lhub.login.text.username =
+
+loc.lhub.FundingCompCreate.textarea.fundingComponentDescription = {"locator":["id=user-name1","name=user-name"],"desc":"Username field"}
+
+
+
+loc.login.input.username = {"locator":["id=user-name1"],"desc":"Username field"}

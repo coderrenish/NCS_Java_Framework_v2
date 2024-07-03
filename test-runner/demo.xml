@@ -1,0 +1,39 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+        <!--<suite name="Sause Demo Test Suite" verbose="0" parallel="none" thread-count="1">-->
+
+        <!--&lt;!&ndash;  Parallel Execution, NOT: Make sure thread count is increased as required&ndash;&gt;-->
+        <!--<suite name="Sause Demo Test Suite" verbose="0" parallel="tests" thread-count="2">-->
+
+        <!--  Parallel Execution of scenarios within same test, NOT: Make sure thread count is increased as required-->
+<suite name="Sause Demo Test Suite" verbose="0" parallel="classes" thread-count="2">
+
+
+<listeners>
+  <!--    <listener class-name="com.ahq.listeners.invokedMethodListener"/>-->
+  <listener class-name="com.ahq.listeners.TestListener"/>
+</listeners>
+<!--  <test name="Demo Tests- TST-02" enabled="true" preserve-order="true">-->
+<!--    <parameter name="log4j.logger.freemarker.cache" value="INFO, CONSOLE"/>-->
+<!--    <parameter name="exec.name" value="Config-1 Execution 1"/>-->
+<!--    <parameter name="exec.index" value="1"/>-->
+<!--    <parameter name="env.code" value="SIT"/>-->
+<!--    <parameter name="env.resources" value="resources;environment-config/DEMO;execution-config/DEMO"/>-->
+<!--    <parameter name="include" value="{'groups':['DEMO-TST-02']}"/>-->
+<!--    <classes>-->
+<!--      <class name="com.qmetry.qaf.automation.step.client.text.BDDTestFactory2"/>-->
+<!--    </classes>-->
+<!--  </test>-->
+<test name="Demo Tests - TST-01" enabled="true" preserve-order="false">
+  <parameter name="log4j.logger.freemarker.cache" value="INFO, CONSOLE"/>
+  <parameter name="exec.name" value="Config-1 Execution 2"/>
+  <parameter name="exec.index" value="1"/>
+  <parameter name="env.code" value="SIT"/>
+  <parameter name="env.resources" value="resources;environment-config/DEMO;execution-config/DEMO"/>
+  <parameter name="include" value="{'groups':['DEMO-TST-01']}"/>
+  <classes>
+    <class name="com.qmetry.qaf.automation.step.client.text.BDDTestFactory2"/>
+  </classes>
+</test>
+
+
+</suite>
