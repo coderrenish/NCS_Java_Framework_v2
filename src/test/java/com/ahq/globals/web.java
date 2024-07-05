@@ -80,6 +80,19 @@ public class web {
     }
 
     /**
+     * @param text [text to fill]
+     * @param input_name [Input field Name]
+     */
+    @QAFTestStep(description = "Web: Input {0} into {1} without Label")
+    @And("Web: Input {string} into {string} without Label")
+    public static void inputWithoutLabel_Web(String text,String input_name) throws Exception {
+        BrowserGlobal.iWaitUntilElementPresent(patternLoc.input(getPageName(),input_name,Boolean.FALSE));
+        BrowserGlobal.iScrollToAnElement(patternLoc.input(getPageName(),input_name,Boolean.FALSE));
+        BrowserGlobal.iWaitUntilElementVisible(patternLoc.input(getPageName(),input_name,Boolean.FALSE));
+        BrowserGlobal.iInputInTo(text, patternLoc.input(getPageName(),input_name,Boolean.FALSE));
+    }
+
+    /**
      *
      * @param field [Field name]
      */
