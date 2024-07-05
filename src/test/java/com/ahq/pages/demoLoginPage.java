@@ -5,22 +5,20 @@ import com.ahq.globals.*;
 import com.ahq.addons.*;
 //import com.ahq.utils.nics_singapore;
 import com.qmetry.qaf.automation.step.QAFTestStep;
+import io.cucumber.java.en.And;
+
 import static com.qmetry.qaf.automation.core.ConfigurationManager.getBundle;
 
 
 public class demoLoginPage {
-    @QAFTestStep(description = "Login: I login to SauseDemo using {0}, {1} and {2}")
-    public void loginILoginToSauseDemoUsingAnd(String url, String username, String password) throws Exception {
-        BrowserGlobal.iOpenWebBrowser(url);
-//        BrowserGlobal.iFillInTo(username,"loc.demo.login.input.username");
-        BrowserGlobal.iFillInTo(username,"loc.login.input.username");
-        BrowserGlobal.iFillInTo(password,loc.get("Login","input","Password"));
-        BrowserGlobal.iClickOn(loc.get("Login","button","Login"));
-        BrowserGlobal.iComment("NRIC :::: " + Utils.nric_singapore_generate("S","40"));
-
-
-
-        //        BrowserGlobal.iFillInTo(username,loc.get("Login","input","First Name"));
+    @QAFTestStep(description = "I login to SauseDemo using {0}, {1} and {2}")
+    @And("I login to SauseDemo using {string}, {string} and {string}")
+    public void iLoginToSauseDemo(String url, String username, String password) throws Exception {
+        web.setPageName_Web("Login Page");
+        web.openBrowser_Web(url);
+        web.inputWithPlaceholder_Web(username,"Username");
+        web.inputWithPlaceholder_Web(password,"Password");
+        web.clickButton_Web("Login");
     }
 
 }
