@@ -9,303 +9,303 @@ import static com.qmetry.qaf.automation.step.CommonStep.waitForPresent;
 
 public class web {
 
-
-    /**
-     * @param url [Open browser with URL]
-     */
-    @QAFTestStep(description = "Web: Open url {0}")
-    @And("Web: Open url {string}")
-    public static void openBrowser(String url) throws Exception {
-        BrowserGlobal.iOpenWebBrowser(url);
-        web.setCurrentExecDateTime_Web();
-    }
-    /**
-     * @param url [Open browser with URL]
-     */
-    @QAFTestStep(description = "Web: Open url {0} And Maximize")
-    @And("Web: Open url {string} And Maximize")
-    public static void openMaximizedBrowser_Web(String url) throws Exception {
-        BrowserGlobal.iOpenWebBrowserAndMaximize(url);
-        setCurrentExecDateTime_Web();
-    }
+//
+//    /**
+//     * @param url [Open browser with URL]
+//     */
+//    @QAFTestStep(description = "Web: Open url {0}")
+//    @And("Web: Open url {string}")
+//    public static void openBrowser(String url) throws Exception {
+//        BrowserGlobal.iOpenWebBrowser(url);
+//        web.setCurrentExecDateTime_Web();
+//    }
+//    /**
+//     * @param url [Open browser with URL]
+//     */
+//    @QAFTestStep(description = "Web: Open url {0} And Maximize")
+//    @And("Web: Open url {string} And Maximize")
+//    public static void openMaximizedBrowser_Web(String url) throws Exception {
+//        BrowserGlobal.iOpenWebBrowserAndMaximize(url);
+//        setCurrentExecDateTime_Web();
+//    }
+////    /**
+////     * @param field [Field name]
+////     */
+////    @QAFTestStep(description = "Web: Click Link {0}")
+////    @And("Web: Click Link {string}")
+////    public static void clickLink_Web(String field) throws Exception {
+////        BrowserGlobal.iWaitUntilElementPresent(patternLoc.link(getPageName(),field));
+////        BrowserGlobal.iScrollToAnElement(patternLoc.link(getPageName(),field));
+////        BrowserGlobal.iWaitUntilElementEnabled(patternLoc.link(getPageName(),field));
+////        BrowserGlobal.iClickOn(patternLoc.link(getPageName(),field));
+////    }
+//
+//
+//
 //    /**
 //     * @param field [Field name]
 //     */
-//    @QAFTestStep(description = "Web: Click Link {0}")
-//    @And("Web: Click Link {string}")
-//    public static void clickLink_Web(String field) throws Exception {
-//        BrowserGlobal.iWaitUntilElementPresent(patternLoc.link(getPageName(),field));
-//        BrowserGlobal.iScrollToAnElement(patternLoc.link(getPageName(),field));
-//        BrowserGlobal.iWaitUntilElementEnabled(patternLoc.link(getPageName(),field));
-//        BrowserGlobal.iClickOn(patternLoc.link(getPageName(),field));
+//    @QAFTestStep(description = "Web: Click Switch Button {0}")
+//    @And("Web: Click Switch Button {string}")
+//    public static void clickSwitchButton_Web(String field) throws Exception {
+//        BrowserGlobal.iScrollToAnElement(patternLoc.switchButton(getPageName(), field));
+//        BrowserGlobal.iWaitUntilElementEnabled(patternLoc.switchButton(getPageName(), field));
+//        BrowserGlobal.iClickOn(patternLoc.switchButton(getPageName(), field));
 //    }
-
-
-
-    /**
-     * @param field [Field name]
-     */
-    @QAFTestStep(description = "Web: Click Switch Button {0}")
-    @And("Web: Click Switch Button {string}")
-    public static void clickSwitchButton_Web(String field) throws Exception {
-        BrowserGlobal.iScrollToAnElement(patternLoc.switchButton(getPageName(), field));
-        BrowserGlobal.iWaitUntilElementEnabled(patternLoc.switchButton(getPageName(), field));
-        BrowserGlobal.iClickOn(patternLoc.switchButton(getPageName(), field));
-    }
-
-    /**
-     * @param text [text to fill]
-     * @param field [Field name]
-     */
-    @QAFTestStep(description = "Web: Input {0} into {1}")
-    @And("Web: Input {string} into {string}")
-    public static void input_Web(String text,String field) throws Exception {
-        BrowserGlobal.iWaitUntilElementPresent(patternLoc.input(getPageName(),field));
-        BrowserGlobal.iScrollToAnElement(patternLoc.input(getPageName(),field));
-        BrowserGlobal.iWaitUntilElementVisible(patternLoc.input(getPageName(),field));
-        BrowserGlobal.iInputInTo(text, patternLoc.input(getPageName(),field));
-    }
-
-    /**
-     * @param text [text to fill]
-     * @param placeholder_text [Placeholder Text]
-     */
-    @QAFTestStep(description = "Web: Input {0} into {1} with Placeholder")
-    @And("Web: Input {string} into {string} with Placeholder")
-    public static void inputWithPlaceholder_Web(String text,String placeholder_text) throws Exception {
-        BrowserGlobal.iWaitUntilElementPresent(patternLoc.input(getPageName(),placeholder_text,Boolean.FALSE));
-        BrowserGlobal.iScrollToAnElement(patternLoc.input(getPageName(),placeholder_text,Boolean.FALSE));
-        BrowserGlobal.iWaitUntilElementVisible(patternLoc.input(getPageName(),placeholder_text,Boolean.FALSE));
-        BrowserGlobal.iInputInTo(text, patternLoc.input(getPageName(),placeholder_text,Boolean.FALSE));
-    }
-
-    /**
-     * @param text [text to fill]
-     * @param input_name [Input field Name]
-     */
-    @QAFTestStep(description = "Web: Input {0} into {1} without Label")
-    @And("Web: Input {string} into {string} without Label")
-    public static void inputWithoutLabel_Web(String text,String input_name) throws Exception {
-        BrowserGlobal.iWaitUntilElementPresent(patternLoc.input(getPageName(),input_name,Boolean.FALSE));
-        BrowserGlobal.iScrollToAnElement(patternLoc.input(getPageName(),input_name,Boolean.FALSE));
-        BrowserGlobal.iWaitUntilElementVisible(patternLoc.input(getPageName(),input_name,Boolean.FALSE));
-        BrowserGlobal.iInputInTo(text, patternLoc.input(getPageName(),input_name,Boolean.FALSE));
-    }
-
-    /**
-     *
-     * @param field [Field name]
-     */
-    @QAFTestStep(description = "Web: Click Checkbox with text {1}")
-    @And("Web: Click Checkbox with text {string}")
-    public static void clickCheckBox_Web(String field) throws Exception {
-        BrowserGlobal.iWaitUntilElementPresent(patternLoc.checkbox(getPageName(),field));
-        BrowserGlobal.iScrollToAnElement(patternLoc.checkbox(getPageName(),field));
-        BrowserGlobal.iWaitUntilElementVisible(patternLoc.checkbox(getPageName(),field));
-        BrowserGlobal.iClickOn(patternLoc.checkbox(getPageName(),field));
-    }
-
-    /**
-     * @param dropdown_Text [Text to be selected in dropdown]
-     * @param field [Field name]
-     */
-    @QAFTestStep(description = "Web: Select Dropdown with text {0} in {1}")
-    @And("Web: Select Dropdown with text {string} in {string}")
-    public static void selectDropdownByText_Web(String dropdown_Text, String field) throws Exception {
-        BrowserGlobal.iWaitUntilElementPresent(patternLoc.select(getPageName(), field));
-        BrowserGlobal.iScrollToAnElement(patternLoc.select(getPageName(), field));
-        BrowserGlobal.iSelectDropdownWithText(patternLoc.select(getPageName(), field), dropdown_Text);
-    }
-
-    /**
-     * @param dropdown_Text [Text to be selected in dropdown]
-     * @param field [Field name]
-     */
-    @QAFTestStep(description = "Web: Select dropdown by input text {0} in {1}")
-    @And("Web: Select dropdown by input text {string} in {string}")
-    public static void selectDropdownByInput_Web(String dropdown_Text, String field) throws Exception {
-        BrowserGlobal.iWaitUntilElementPresent(patternLoc.input(getPageName(), field));
-        BrowserGlobal.iScrollToAnElement(patternLoc.input(getPageName(), field));
-        BrowserGlobal.iFillInTo(dropdown_Text, patternLoc.input(getPageName(), field));
-        BrowserGlobal.iWaitForMilliseconds("500");
-        BrowserGlobal.iPressKey("Enter");
-    }
-
-    /**
-     * @param radio_Text [Text to be selected in Radio button]
-     * @param field [Field name]
-     */
-
-    @QAFTestStep(description = "Web: Click Radio Button with text {0} in {1}")
-    @And("Web: Click Radio Button with text {string} in {string}")
-    public static void clickRadioButton_Web(String radio_Text, String field) throws Exception {
-        BrowserGlobal.iWaitUntilElementPresent(patternLoc.radioButton(getPageName(),field,radio_Text));
-        BrowserGlobal.iScrollToAnElement(patternLoc.radioButton(getPageName(),field,radio_Text));
-        BrowserGlobal.iClickOn(patternLoc.radioButton(getPageName(),field,radio_Text));
-    }
-
-
-
-
-
-//    /**
-//     * @param page [Page name]
-//     * @param header_text [Header text to be verified]
-//     */
-//    @QAFTestStep(description = "Web: Verify page header text {1}")
-//    @And("Web: Verify page header text {string}")
-//    public static void verifyPageHeader(String header_text) throws Exception {
-//        BrowserGlobal.iWaitForPageToLoad();
-//        BrowserGlobal.iWaitUntilElementPresent(patternLoc.header(getPageName(),header_text));
-//        BrowserGlobal.iScrollToAnElement(patternLoc.header(getPageName(),header_text));
-//        BrowserGlobal.iWaitUntilElementVisible(patternLoc.header(getPageName(),header_text));
-//        BrowserGlobal.iAssertElementText(patternLoc.header(getPageName(),header_text),header_text);
-//    }
-    /**
-     * @param text [text to be verified in page]
-     */
-    @QAFTestStep(description = "Web: Verify page contains Text {0}")
-    @And("Web: Verify page contains Text {string}")
-    public static void verifyPageContainsText_Web(String text) throws Exception {
-        BrowserGlobal.iWaitForPageToLoad();
-        BrowserGlobal.iAssertTextPresentInPage(text);
-    }
-
-    /**
-     * @throws Exception
-     */
-    @QAFTestStep(description = "Web: Wait for page to Load")
-    @And("Web: Wait for page to Load")
-    public static void waitForPageToLoad_Web() throws Exception {
-        BrowserGlobal.iWaitForPageToLoad();
-    }
-    /**
-     *
-     * @param tabNumber [Tab number to locate]
-     *
-     */
-    @QAFTestStep(description = "Web: Move to Browser Tab {0}")
-    @And("Web: Move to Browser Tab {string}")
-    public static void moveToBrowserTab(String tabNumber) throws Exception {
-        BrowserGlobal.iSwitchWindowByIndex(tabNumber);
-    }
-
-
-//    /**
-//     *
-//     * @param field [Field name]
-//     *
-//     */
-//    @QAFTestStep(description = "Web: Choose Field:{0} Value:{1}")
-//    public static void tabOut( String field) throws Exception {
-//        BrowserGlobal.iClickAndTabInToThenEnter(patternLoc.input(getPageName(),field));
-//    }
-/**
- *
- * @param field [Field name]
- *
- */
-/* @QAFTestStep(description = "tab Out and Enter on Field {0}")
-public static void tabOnceAndEnter( String field) throws Exception {
-BrowserGlobal.iTabInToThenEnter(patternLoc.input(getPageName(),field));
-} */
+//
 //    /**
 //     * @param text [text to fill]
 //     * @param field [Field name]
 //     */
-//    @QAFTestStep(description = "Web: Input {0} into {1} without label")
-//    public static void inputWithoutLabel(String text,String field) throws Exception {
-//        BrowserGlobal.iWaitUntilElementPresent(patternLoc.input(getPageName(),field, false));
-//        BrowserGlobal.iScrollToAnElement(patternLoc.input(getPageName(),field, false));
-//        BrowserGlobal.iWaitUntilElementVisible(patternLoc.input(getPageName(),field, false));
-//        BrowserGlobal.iInputInTo(text, patternLoc.input(getPageName(),field, false));
+//    @QAFTestStep(description = "Web: Input {0} into {1}")
+//    @And("Web: Input {string} into {string}")
+//    public static void input_Web(String text,String field) throws Exception {
+//        BrowserGlobal.iWaitUntilElementPresent(patternLoc.input(getPageName(),field));
+//        BrowserGlobal.iScrollToAnElement(patternLoc.input(getPageName(),field));
+//        BrowserGlobal.iWaitUntilElementVisible(patternLoc.input(getPageName(),field));
+//        BrowserGlobal.iInputInTo(text, patternLoc.input(getPageName(),field));
 //    }
-
-/**
- * @param field [Field name]
- */
-/* @QAFTestStep(description = "Click button {0}")
-public static void clickModalButton(String field) throws Exception {
-BrowserGlobal.iWaitUntilElementVisibleWithTimeout(patternLoc.modalButton(getPageName(),field),"10");
-BrowserGlobal.iScrollToAnElement(patternLoc.modalButton(getPageName(),field));
-BrowserGlobal.iWaitUntilElementEnabled(patternLoc.modalButton(getPageName(),field));
-BrowserGlobal.iClickOn(patternLoc.modalButton(getPageName(),field));
-} */
+//
 //    /**
-//     * @param field [Field name]
+//     * @param text [text to fill]
+//     * @param placeholder_text [Placeholder Text]
 //     */
-//    @QAFTestStep(description = "Web: Click and Input field {0}")
-//    public static void clickInput(String field) throws Exception {
-//        BrowserGlobal.iClickOn(patternLoc.input(getPageName(),field));
+//    @QAFTestStep(description = "Web: Input {0} into {1} with Placeholder")
+//    @And("Web: Input {string} into {string} with Placeholder")
+//    public static void inputWithPlaceholder_Web(String text,String placeholder_text) throws Exception {
+//        BrowserGlobal.iWaitUntilElementPresent(patternLoc.input(getPageName(),placeholder_text,Boolean.FALSE));
+//        BrowserGlobal.iScrollToAnElement(patternLoc.input(getPageName(),placeholder_text,Boolean.FALSE));
+//        BrowserGlobal.iWaitUntilElementVisible(patternLoc.input(getPageName(),placeholder_text,Boolean.FALSE));
+//        BrowserGlobal.iInputInTo(text, patternLoc.input(getPageName(),placeholder_text,Boolean.FALSE));
 //    }
-
-    /**
-     * @param link_text [Link Text to click]
-     */
-    @QAFTestStep(description = "Web: Double click on link {0}")
-    @And("Web: Double click on link {string}")
-    public static void doubleClickLink_Web(String link_text) throws Exception {
-        BrowserGlobal.iScrollToAnElement(patternLoc.link(getPageName(),link_text));
-        BrowserGlobal.iWaitUntilElementVisible(patternLoc.link(getPageName(),link_text));
-        BrowserGlobal.iWaitUntilElementEnabled(patternLoc.link(getPageName(),link_text));
-        BrowserGlobal.iDoubleClickOn(patternLoc.link(getPageName(),link_text));
-    }
-
-
-    /**
-     *
-     *
-     */
-    @QAFTestStep(description = "Web: Take screenshot")
-    @And("Web: Take screenshot")
-    public static void takeScreenshot_Web() throws Exception {
-        BrowserGlobal.iTakeScreenshot();
-    }
-
-    /**
-     *
-     * @param iframeIdOrName- [iFrame id or name]
-     *
-     */
-    @QAFTestStep(description="Web: Move to iframe by Id or Name {0}")
-    @And("Web: Move to iframe by Id or Name {string}")
-    public static void moveToIframeByIdOrName_Web(String iframeIdOrName) throws Exception {
-        BrowserGlobal.iWaitForPageToLoad();
-        BrowserGlobal.iSwitchToIFrameByIdOrName(iframeIdOrName);
-    }
+//
 //    /**
-//     * @param field [Field name]
+//     * @param text [text to fill]
+//     * @param input_name [Input field Name]
 //     */
-//    @QAFTestStep(description = "Web: Move to Subheader {0}")
-//    public static void clickSubHeader(String field) throws Exception {
-//        BrowserGlobal.iScrollToAnElement(patternLoc.subHeader(getPageName(),field));
-//        BrowserGlobal.iWaitUntilElementVisible(patternLoc.subHeader(getPageName(),field));
-//        BrowserGlobal.iWaitUntilElementEnabled(patternLoc.subHeader(getPageName(),field));
-//        BrowserGlobal.iClickOn(patternLoc.subHeader(getPageName(),field));
+//    @QAFTestStep(description = "Web: Input {0} into {1} without Label")
+//    @And("Web: Input {string} into {string} without Label")
+//    public static void inputWithoutLabel_Web(String text,String input_name) throws Exception {
+//        BrowserGlobal.iWaitUntilElementPresent(patternLoc.input(getPageName(),input_name,Boolean.FALSE));
+//        BrowserGlobal.iScrollToAnElement(patternLoc.input(getPageName(),input_name,Boolean.FALSE));
+//        BrowserGlobal.iWaitUntilElementVisible(patternLoc.input(getPageName(),input_name,Boolean.FALSE));
+//        BrowserGlobal.iInputInTo(text, patternLoc.input(getPageName(),input_name,Boolean.FALSE));
 //    }
-
+//
 //    /**
 //     *
 //     * @param field [Field name]
 //     */
-//    @QAFTestStep(description = "Web: Click select field with value Value:{1}")
-//    public static void clickSelect(String field) throws Exception {
-//        BrowserGlobal.iWaitUntilElementPresent(patternLoc.select(getPageName(),field));
-//        BrowserGlobal.iScrollToAnElement(patternLoc.select(getPageName(),field));
-//        BrowserGlobal.iClickOn(patternLoc.select(getPageName(),field));
+//    @QAFTestStep(description = "Web: Click Checkbox with text {1}")
+//    @And("Web: Click Checkbox with text {string}")
+//    public static void clickCheckBox_Web(String field) throws Exception {
+//        BrowserGlobal.iWaitUntilElementPresent(patternLoc.checkbox(getPageName(),field));
+//        BrowserGlobal.iScrollToAnElement(patternLoc.checkbox(getPageName(),field));
+//        BrowserGlobal.iWaitUntilElementVisible(patternLoc.checkbox(getPageName(),field));
+//        BrowserGlobal.iClickOn(patternLoc.checkbox(getPageName(),field));
 //    }
-
+//
 //    /**
+//     * @param dropdown_Text [Text to be selected in dropdown]
 //     * @param field [Field name]
 //     */
-//    @QAFTestStep(description = "Click Graph link {0}")
-//    public static void clickGraphLink(String field) throws Exception {
-//// BrowserGlobal.iScrollToAnElement(patternLoc.link(getPageName(),field));
-//        BrowserGlobal.iWaitUntilElementPresent(patternLoc.graphlink(getPageName(),field));
-//        BrowserGlobal.iWaitUntilElementEnabled(patternLoc.graphlink(getPageName(),field));
-//        BrowserGlobal.iClickOn(patternLoc.graphlink(getPageName(),field));
+//    @QAFTestStep(description = "Web: Select Dropdown with text {0} in {1}")
+//    @And("Web: Select Dropdown with text {string} in {string}")
+//    public static void selectDropdownByText_Web(String dropdown_Text, String field) throws Exception {
+//        BrowserGlobal.iWaitUntilElementPresent(patternLoc.select(getPageName(), field));
+//        BrowserGlobal.iScrollToAnElement(patternLoc.select(getPageName(), field));
+//        BrowserGlobal.iSelectDropdownWithText(patternLoc.select(getPageName(), field), dropdown_Text);
 //    }
-
+//
+//    /**
+//     * @param dropdown_Text [Text to be selected in dropdown]
+//     * @param field [Field name]
+//     */
+//    @QAFTestStep(description = "Web: Select dropdown by input text {0} in {1}")
+//    @And("Web: Select dropdown by input text {string} in {string}")
+//    public static void selectDropdownByInput_Web(String dropdown_Text, String field) throws Exception {
+//        BrowserGlobal.iWaitUntilElementPresent(patternLoc.input(getPageName(), field));
+//        BrowserGlobal.iScrollToAnElement(patternLoc.input(getPageName(), field));
+//        BrowserGlobal.iFillInTo(dropdown_Text, patternLoc.input(getPageName(), field));
+//        BrowserGlobal.iWaitForMilliseconds("500");
+//        BrowserGlobal.iPressKey("Enter");
+//    }
+//
+//    /**
+//     * @param radio_Text [Text to be selected in Radio button]
+//     * @param field [Field name]
+//     */
+//
+//    @QAFTestStep(description = "Web: Click Radio Button with text {0} in {1}")
+//    @And("Web: Click Radio Button with text {string} in {string}")
+//    public static void clickRadioButton_Web(String radio_Text, String field) throws Exception {
+//        BrowserGlobal.iWaitUntilElementPresent(patternLoc.radioButton(getPageName(),field,radio_Text));
+//        BrowserGlobal.iScrollToAnElement(patternLoc.radioButton(getPageName(),field,radio_Text));
+//        BrowserGlobal.iClickOn(patternLoc.radioButton(getPageName(),field,radio_Text));
+//    }
+//
+//
+//
+//
+//
+////    /**
+////     * @param page [Page name]
+////     * @param header_text [Header text to be verified]
+////     */
+////    @QAFTestStep(description = "Web: Verify page header text {1}")
+////    @And("Web: Verify page header text {string}")
+////    public static void verifyPageHeader(String header_text) throws Exception {
+////        BrowserGlobal.iWaitForPageToLoad();
+////        BrowserGlobal.iWaitUntilElementPresent(patternLoc.header(getPageName(),header_text));
+////        BrowserGlobal.iScrollToAnElement(patternLoc.header(getPageName(),header_text));
+////        BrowserGlobal.iWaitUntilElementVisible(patternLoc.header(getPageName(),header_text));
+////        BrowserGlobal.iAssertElementText(patternLoc.header(getPageName(),header_text),header_text);
+////    }
+//    /**
+//     * @param text [text to be verified in page]
+//     */
+//    @QAFTestStep(description = "Web: Verify page contains Text {0}")
+//    @And("Web: Verify page contains Text {string}")
+//    public static void verifyPageContainsText_Web(String text) throws Exception {
+//        BrowserGlobal.iWaitForPageToLoad();
+//        BrowserGlobal.iAssertTextPresentInPage(text);
+//    }
+//
+//    /**
+//     * @throws Exception
+//     */
+//    @QAFTestStep(description = "Web: Wait for page to Load")
+//    @And("Web: Wait for page to Load")
+//    public static void waitForPageToLoad_Web() throws Exception {
+//        BrowserGlobal.iWaitForPageToLoad();
+//    }
+//    /**
+//     *
+//     * @param tabNumber [Tab number to locate]
+//     *
+//     */
+//    @QAFTestStep(description = "Web: Move to Browser Tab {0}")
+//    @And("Web: Move to Browser Tab {string}")
+//    public static void moveToBrowserTab(String tabNumber) throws Exception {
+//        BrowserGlobal.iSwitchWindowByIndex(tabNumber);
+//    }
+//
+//
+////    /**
+////     *
+////     * @param field [Field name]
+////     *
+////     */
+////    @QAFTestStep(description = "Web: Choose Field:{0} Value:{1}")
+////    public static void tabOut( String field) throws Exception {
+////        BrowserGlobal.iClickAndTabInToThenEnter(patternLoc.input(getPageName(),field));
+////    }
+///**
+// *
+// * @param field [Field name]
+// *
+// */
+///* @QAFTestStep(description = "tab Out and Enter on Field {0}")
+//public static void tabOnceAndEnter( String field) throws Exception {
+//BrowserGlobal.iTabInToThenEnter(patternLoc.input(getPageName(),field));
+//} */
+////    /**
+////     * @param text [text to fill]
+////     * @param field [Field name]
+////     */
+////    @QAFTestStep(description = "Web: Input {0} into {1} without label")
+////    public static void inputWithoutLabel(String text,String field) throws Exception {
+////        BrowserGlobal.iWaitUntilElementPresent(patternLoc.input(getPageName(),field, false));
+////        BrowserGlobal.iScrollToAnElement(patternLoc.input(getPageName(),field, false));
+////        BrowserGlobal.iWaitUntilElementVisible(patternLoc.input(getPageName(),field, false));
+////        BrowserGlobal.iInputInTo(text, patternLoc.input(getPageName(),field, false));
+////    }
+//
+///**
+// * @param field [Field name]
+// */
+///* @QAFTestStep(description = "Click button {0}")
+//public static void clickModalButton(String field) throws Exception {
+//BrowserGlobal.iWaitUntilElementVisibleWithTimeout(patternLoc.modalButton(getPageName(),field),"10");
+//BrowserGlobal.iScrollToAnElement(patternLoc.modalButton(getPageName(),field));
+//BrowserGlobal.iWaitUntilElementEnabled(patternLoc.modalButton(getPageName(),field));
+//BrowserGlobal.iClickOn(patternLoc.modalButton(getPageName(),field));
+//} */
+////    /**
+////     * @param field [Field name]
+////     */
+////    @QAFTestStep(description = "Web: Click and Input field {0}")
+////    public static void clickInput(String field) throws Exception {
+////        BrowserGlobal.iClickOn(patternLoc.input(getPageName(),field));
+////    }
+//
+//    /**
+//     * @param link_text [Link Text to click]
+//     */
+//    @QAFTestStep(description = "Web: Double click on link {0}")
+//    @And("Web: Double click on link {string}")
+//    public static void doubleClickLink_Web(String link_text) throws Exception {
+//        BrowserGlobal.iScrollToAnElement(patternLoc.link(getPageName(),link_text));
+//        BrowserGlobal.iWaitUntilElementVisible(patternLoc.link(getPageName(),link_text));
+//        BrowserGlobal.iWaitUntilElementEnabled(patternLoc.link(getPageName(),link_text));
+//        BrowserGlobal.iDoubleClickOn(patternLoc.link(getPageName(),link_text));
+//    }
+//
+//
+//    /**
+//     *
+//     *
+//     */
+//    @QAFTestStep(description = "Web: Take screenshot")
+//    @And("Web: Take screenshot")
+//    public static void takeScreenshot_Web() throws Exception {
+//        BrowserGlobal.iTakeScreenshot();
+//    }
+//
+//    /**
+//     *
+//     * @param iframeIdOrName- [iFrame id or name]
+//     *
+//     */
+//    @QAFTestStep(description="Web: Move to iframe by Id or Name {0}")
+//    @And("Web: Move to iframe by Id or Name {string}")
+//    public static void moveToIframeByIdOrName_Web(String iframeIdOrName) throws Exception {
+//        BrowserGlobal.iWaitForPageToLoad();
+//        BrowserGlobal.iSwitchToIFrameByIdOrName(iframeIdOrName);
+//    }
+////    /**
+////     * @param field [Field name]
+////     */
+////    @QAFTestStep(description = "Web: Move to Subheader {0}")
+////    public static void clickSubHeader(String field) throws Exception {
+////        BrowserGlobal.iScrollToAnElement(patternLoc.subHeader(getPageName(),field));
+////        BrowserGlobal.iWaitUntilElementVisible(patternLoc.subHeader(getPageName(),field));
+////        BrowserGlobal.iWaitUntilElementEnabled(patternLoc.subHeader(getPageName(),field));
+////        BrowserGlobal.iClickOn(patternLoc.subHeader(getPageName(),field));
+////    }
+//
+////    /**
+////     *
+////     * @param field [Field name]
+////     */
+////    @QAFTestStep(description = "Web: Click select field with value Value:{1}")
+////    public static void clickSelect(String field) throws Exception {
+////        BrowserGlobal.iWaitUntilElementPresent(patternLoc.select(getPageName(),field));
+////        BrowserGlobal.iScrollToAnElement(patternLoc.select(getPageName(),field));
+////        BrowserGlobal.iClickOn(patternLoc.select(getPageName(),field));
+////    }
+//
+////    /**
+////     * @param field [Field name]
+////     */
+////    @QAFTestStep(description = "Click Graph link {0}")
+////    public static void clickGraphLink(String field) throws Exception {
+////// BrowserGlobal.iScrollToAnElement(patternLoc.link(getPageName(),field));
+////        BrowserGlobal.iWaitUntilElementPresent(patternLoc.graphlink(getPageName(),field));
+////        BrowserGlobal.iWaitUntilElementEnabled(patternLoc.graphlink(getPageName(),field));
+////        BrowserGlobal.iClickOn(patternLoc.graphlink(getPageName(),field));
+////    }
+//
     /**
      *
      * @return [Page Name]
