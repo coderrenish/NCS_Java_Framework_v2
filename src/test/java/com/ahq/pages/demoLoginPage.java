@@ -16,8 +16,8 @@ public class demoLoginPage {
     public void iLoginToSauseDemo(String url, String username, String password) throws Exception {
         web.setPageName_Web("Login Page");
         web.openBrowser_Web(url);
-        web.inputWithPlaceholder_Web(username,"Username");
-        web.inputWithPlaceholder_Web(password,"Password");
+        web.inputTextWithPlaceholder_Web(username,"Username");
+        web.inputTextWithPlaceholder_Web(password,"Password");
         web.clickButton_Web("Login");
     }
 
