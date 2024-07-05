@@ -528,14 +528,6 @@ public class web {
     }
 
 
-    /**
-     * @param input_value [Input value to fill]
-     */
-    @QAFTestStep(description = "Testing 123 {0}")
-    @And("Testing 123 {string}")
-    public static void testing123_Web(String input_value) throws Exception {
-        BrowserGlobal.iComment("=====?????======" + input_value);
-    }
 
     /**
      * @param locName [Field to be waited for PResent, Scroll & Enabled]
