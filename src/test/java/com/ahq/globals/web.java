@@ -462,14 +462,16 @@ public class web {
     }
 
     /**
-     * @param partial_title [Partial Page Title of the page]
+     * @param title_text [Title text to be verified]
+     * @param page_name [Page Name to be set]
      */
-    @QAFTestStep(description = "Web: Verify partial page title {0}")
-    @And("Web: Verify partial page title {string}")
-    public static void verifyPartialPageTitle_Web(String partial_title) throws Exception {
+    @QAFTestStep(description = "Web: Wait-And-Verify Page-Title-Text Title:{0} Page-Name:{1}")
+    @And("Web: Wait-And-Verify Page-Title-Text Title:{string} Page-Name:{string}")
+    public static void waitAndVerifyPageTitleTextWithPageName_Web(String title_text, String page_name) throws Exception {
         BrowserGlobal.iWaitForPageToLoad();
-        getBundle().setProperty("auto.page.name",getPageName());
-        BrowserGlobal.iAssertTitlePartialText(partial_title);
+        web.setPageName_Web(page_name);
+        BrowserGlobal.iWaitForPageToLoad();
+        BrowserGlobal.iAssertTitlePartialText(title_text);
     }
 
     /**
