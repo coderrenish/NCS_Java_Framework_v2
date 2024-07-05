@@ -101,12 +101,11 @@ Feature: This is a test feature file
     @SIT
     @SMOKE
   Scenario Outline: Test scenario using Step Definition with new Web
-    * I login to SauseDemo using "${env.url}", "<username>" and "<password>"
-    * I Verify "Homepage" page header text is "Products"
-    * I wait for "10" seconds
+    Given I login to SauseDemo using "${env.url}", "<username>" and "<password>"
+    Then I Verify "Homepage" page header text is "Products"
+    Then I Verify "Homepage" page title text is "Swag Labs"
+    * I wait for "5" seconds
 
-#  Result: Home: I verify I'm in homepage
-#  Step: TEST: I test "<cardYear>"
 #    Examples: {'dataFile':'resources/data/demo_test_data.xlsx','sheetName':'${env.code}', 'filter':'_ID==\"TST-04\" and _STATUS==\"yes\" and _INSTANCE==1'}
     Examples: {'dataFile':'resources/data/demo_test_data.csv', 'filter':'_ID==\"DEMO-TST-04\" and _STATUS==\"yes\"'}
 
