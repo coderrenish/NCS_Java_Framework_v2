@@ -220,11 +220,14 @@ public class actions {
     private void performOpenBrowser(String param_2, String param_3, String param_4, String param_5, String param_6, String param_7) throws Exception {
         // {open}{browser}{url}{width}{width_value}{height}{height_value}
         if (param_2.equalsIgnoreCase("browser") && param_4.equalsIgnoreCase("width") && param_6.equalsIgnoreCase("height")) {
-            BrowserGlobal.iOpenWebBrowserWindowSize(param_3, param_5, param_7);
+//            BrowserGlobal.iOpenWebBrowserWindowSize(param_3, param_5, param_7);
+            BrowserGlobal.iOpenWebBrowserWithWindowSize(param_3, param_5, param_7);
+
         }
         // {open}{browser}{url}{maximise}{screenshot}
         else if (param_2.equalsIgnoreCase("browser") && param_4.equalsIgnoreCase("maximise") && param_5.equalsIgnoreCase("screenshot")) {
-            BrowserGlobal.iOpenWebBrowserMaximiseAndScreenshot(param_3);
+//            BrowserGlobal.iOpenWebBrowserMaximiseAndScreenshot(param_3);
+            BrowserGlobal.iOpenWebBrowserMaximiseWindowAndTakeScreenshot(param_3);
         }
         // {open}{browser}{url}
         else if (param_2.equalsIgnoreCase("browser")) {
@@ -245,7 +248,9 @@ public class actions {
                 } else if (param_3.equalsIgnoreCase("once-enabled")) {
                     BrowserGlobal.iClickOnLocOnceEnabled(loc.get(page, param_2, param_2_split[0] + " " + checkboxValue));
                 } else {
-                    BrowserGlobal.iClickOnElementIfNotSelected(loc.get(page, param_2, param_2_split[0] + " " + checkboxValue));
+//                    BrowserGlobal.iClickOnElementIfNotSelected(loc.get(page, param_2, param_2_split[0] + " " + checkboxValue));
+                    BrowserGlobal.iClickOnCheckboxOrRadioIfNotSelected(loc.get(page, param_2, param_2_split[0] + " " + checkboxValue));
+
                 }
             }
         } else if (elementTypes.contains(param_2.toLowerCase()) && param_3.equalsIgnoreCase("if-present")) {
