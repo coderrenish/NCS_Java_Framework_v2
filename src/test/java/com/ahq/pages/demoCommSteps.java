@@ -13,5 +13,12 @@ public class demoCommSteps {
         web.waitAndVerifyPageHeaderTextWithPageName_Web(headerText,pageName);
     }
 
+    @QAFTestStep(description = "I Verify {0} page title text is {1}")
+    @And("I Verify {string} page title text is {string}")
+    public void iVerifyPageTitleText(String pageName, String titleText) throws Exception {
+        web.setPageName_Web(pageName);
+        web.waitAndVerifyPageTitleTextWithPageName_Web(titleText,pageName);
+    }
+
 }
 
