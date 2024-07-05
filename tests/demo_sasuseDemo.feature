@@ -21,8 +21,8 @@ Feature: This is a test feature file
     @TestCaseId:DEMO-TST-02
     @PRIORITY:2
   Scenario Outline: Test scenario using Test Data directly, Environment Variable, Encrypted Password & Globals (without writing any Step definitions)
-  * I open the web browser with "${env.url}"
-  And: I fill "<username>" into "loc.demo.login.input.username"
+  Step: I open the web browser with "${env.url}"
+  And: I fill "${username}" into "loc.demo.login.input.username"
   And: I fill "<password>" into "loc.demo.login.input.password"
   And: I click on "loc.demo.login.button.login"
   Result: I assert text present in page "Products"
@@ -90,6 +90,25 @@ Feature: This is a test feature file
    And: I wait for page to load
   Result: I assert text present in page "Products"
 #   And: I wait for "10" seconds
+
+
+
+
+
+  @DEMO-TST-04-1
+    @TestCaseId:DEMO-TST-04-1
+    @PRIORITY:6
+    @SIT
+    @SMOKE
+  Scenario Outline: Test scenario using Step Definition with new Web
+    * I login to SauseDemo using "${env.url}", "<username>" and "<password>"
+    * I Verify "Homepage" page header text is "Products"
+    * I wait for "10" seconds
+
+#  Result: Home: I verify I'm in homepage
+#  Step: TEST: I test "<cardYear>"
+#    Examples: {'dataFile':'resources/data/demo_test_data.xlsx','sheetName':'${env.code}', 'filter':'_ID==\"TST-04\" and _STATUS==\"yes\" and _INSTANCE==1'}
+    Examples: {'dataFile':'resources/data/demo_test_data.csv', 'filter':'_ID==\"DEMO-TST-04\" and _STATUS==\"yes\"'}
 
 
 
