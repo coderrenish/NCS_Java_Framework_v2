@@ -341,7 +341,7 @@ public class D365CRM {
         String pageName = pageNameCheck(page);
         String fieldLoc = fieldLocCheck(page,tab_text,"MAIN");
         Boolean tabScroll = false;
-        BrowserGlobal.iWaitUntilElementVisible(d365Loc.scrollVerticalTabPanel(page,tab_text));
+        BrowserGlobal.iWaitUntilElementPresent(d365Loc.scrollVerticalTabPanel(page,tab_text));
 
 //        for (int i = 0; i < 3; i++) {
         if (BrowserGlobal.isElementVisibleWithTimeout(d365Loc.tab(pageName, fieldLoc, tab_text), "5000")) {
