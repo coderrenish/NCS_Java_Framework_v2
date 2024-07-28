@@ -848,6 +848,21 @@ public class d365Loc {
         return locGeneration(argFieldName);
     }
 
+    public static String sectionHeader(String argPage, String argFieldLocation, String argFieldName) throws Exception {
+        if (locCheck(argPage, argFieldLocation, "SECTION_HEADER", argFieldName)) {
+            switch (d365PlatformVersion) {
+                case ("v9.1"):
+                case ("v9.2"):
+                default: {
+                    locEntry("xpath", "//h2[@title='<field_name>']");
+                    locEntry("xpath", "//h3[text()='<field_name>']");
+                    break; }
+            }
+        }
+        return locGeneration(argFieldName);
+    }
+
+
 
     public static String inputText(String argPage, String argFieldLocation, String argFieldName) throws Exception{
         if (locCheck(argPage, argFieldLocation, "INPUT_TEXT", argFieldName)) {
@@ -859,6 +874,7 @@ public class d365Loc {
                     locEntry("xpath","//input[@placeholder='<field_name>']");
                     locEntry("xpath","//input[@id='<field_name>']");
                     locEntry("xpath","//textarea[@aria-label='<field_name>']");
+                    locEntry("xpath","//input[contains(@placeholder,'<field_name>') or contains(@aria-label,'<field_name>')]");
                     break;
                 }
             }
@@ -982,6 +998,10 @@ public class d365Loc {
                     locEntry("xpath","//button[contains(@title,'<field_name>')]");
                     locEntry("xpath","//button/descendant::span[text()='<field_name>']");
                     locEntry("xpath","//button/descendant::label[text()='<field_name>']");
+                    locEntry("xpath","//input[@type='submit' and @value='<field_name>']");
+                    locEntry("xpath","//span[@id='submitButton' and text()='<field_name>']");
+
+
                     break;
                 }
             }
@@ -1147,8 +1167,10 @@ public class d365Loc {
 //        return locGeneration(argFieldName);
 //    }
 
+
+
     public static String scrollHorizontal(String argPage) throws Exception{
-        if (locCheck(argPage, "OTHER", "SCROLL", "Scroll Horizontal")) {
+        if (locCheck(argPage, "OTHER", "SCROLL_HORIZONTAL", "Scroll Horizontal")) {
             switch (d365PlatformVersion) {
                 case ("v9.1"):
                 case ("v9.2"):
@@ -1163,7 +1185,7 @@ public class d365Loc {
     }
 
     public static String scrollVertical(String argPage) throws Exception{
-        if (locCheck(argPage, "OTHER", "SCROLL", "Scroll Vertical")) {
+        if (locCheck(argPage, "OTHER", "SCROLL_VERTICAL", "Scroll Vertical")) {
             switch (d365PlatformVersion) {
                 case ("v9.1"):
                 case ("v9.2"):
@@ -1178,6 +1200,19 @@ public class d365Loc {
         return locGeneration("Scroll Vertical");
     }
 
+        public static String scrollVerticalUsingSubHeader(String argPage, String argFieldLocation, String argFieldName) throws Exception {
+            if (locCheck(argPage, "OTHER", "SCROLL_VERTICAL_USING_SUB_HEADER", "Scroll Vertical Using Sub Header")) {
+            switch (d365PlatformVersion) {
+                case ("v9.1"):
+                case ("v9.2"):
+                default: {
+                    locEntry("xpath", "(//h2)[1]");
+                    locEntry("xpath", "(//h3)[1]");
+                    break; }
+            }
+        }
+        return locGeneration(argFieldName);
+    }
     public static String scrollVerticalTabPanel(String argPage,String argFieldName) throws Exception{
         if (locCheck(argPage, "OTHER", "SCROLL", argFieldName)) {
             switch (d365PlatformVersion) {

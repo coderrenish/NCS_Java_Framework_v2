@@ -895,13 +895,21 @@ public class D365CRM {
     @And("D365CRM: Wait-And-Verify-Page-Header Text:{string} Page:{string}")
     public static void waitAndVerifyPageHeader_D365CRM(String header_text,String page) throws Exception {
         BrowserGlobal.iWaitForPageToLoad();
-        BrowserGlobal.iWaitUntilElementVisible(d365Loc.systemViewOrHeaderTitle(page,"main", header_text));
-        BrowserGlobal.iAssertElementPresent(d365Loc.systemViewOrHeaderTitle(page,"main", header_text));
+        BrowserGlobal.iWaitUntilElementVisible(d365Loc.systemViewOrHeaderTitle(page,"MAIN", header_text));
+        BrowserGlobal.iAssertElementPresent(d365Loc.systemViewOrHeaderTitle(page,"MAIN", header_text));
 //        BrowserGlobal.iWaitUntilElementVisible(d365Loc.loc(page,"HEADER",header_text));
 //        BrowserGlobal.iAssertElementPresent(d365Loc.loc(page,"HEADER",header_text));
         BrowserGlobal.iAssertTitlePartialText(header_text);
-        BrowserGlobal.iScrollUsingMouseWheelByValueFromVisibleField("2000",d365Loc.scrollVertical(page));
-        BrowserGlobal.iScrollUsingMouseWheelByValueFromVisibleField("-2000",d365Loc.scrollVertical(page));
+        if ( BrowserGlobal.isElementVisibleWithTimeout(d365Loc.scrollVerticalUsingSubHeader(page,"MAIN", ""), "3000")) {
+            BrowserGlobal.iScrollUsingMouseWheelByValueFromVisibleField("5000",d365Loc.scrollVertical(page));
+            BrowserGlobal.iWaitForMilliseconds("500");
+            BrowserGlobal.iScrollUsingMouseWheelByValueFromVisibleField("-5000",d365Loc.scrollVertical(page));
+        } else {
+            BrowserGlobal.iScrollUsingMouseWheelByValueFromVisibleField("2000",d365Loc.scrollVertical(page));
+            BrowserGlobal.iWaitForMilliseconds("500");
+            BrowserGlobal.iScrollUsingMouseWheelByValueFromVisibleField("-2000",d365Loc.scrollVertical(page));
+        }
+
     }
 
     /**
@@ -963,22 +971,7 @@ public class D365CRM {
         BrowserGlobal.iAssertElementValue(d365Loc.inputDate(pageName,fieldLoc,field),date);
     }
 
-    /**
-     * @param from_app [App you have presently logged in]
-     * @param to_app [App you want to switch to]
-     * [Check top left next to Dynamics logo]
-     */
-    @QAFTestStep(description = "D365CRM: Switch-App From:{0} To:{1}")
-    @And("D365CRM: Switch-App From:{string} To:{string}")
-    public static void switchApp_D365CRM(String from_app, String to_app) throws Exception {
-        BrowserGlobal.iWaitUntilElementPresent(d365Loc.link("Switching App","TOP_BAR",from_app));
-        BrowserGlobal.iScrollToAnElement(d365Loc.link("Switching App","TOP_BAR",from_app));
-        BrowserGlobal.iClickOn(d365Loc.link("Switching App","TOP_BAR",from_app));
 
-        BrowserGlobal.iWaitUntilElementPresent("xpath=//iframe[@title='AppLandingPage']");
-        BrowserGlobal.iSwitchToIFrameByIdOrName("AppLandingPage");
-        BrowserGlobal.iClickOn(d365Loc.link("Switching App","SWITCH_APP",to_app));
-    }
 //    /**
 //     * @param field [Field name]
 //     * @param page [Page name]
@@ -1047,7 +1040,21 @@ public class D365CRM {
         BrowserGlobal.iWaitUntilElementPresent(d365Loc.select(pageName,fieldLoc,field));
         BrowserGlobal.iScrollToAnElement(d365Loc.select(pageName,fieldLoc,field));
         BrowserGlobal.iAssertElementPresent(d365Loc.selectValue(pageName,fieldLoc,fieldDetails));
+    }
 
+    /**
+     * @param header_Text [Header Text to be verified present]
+     * @param page [Page name]
+     */
+    @QAFTestStep(description = "D365CRM: Verify-Section-Header-Present Text:{0} Page:{1}")
+    @And("D365CRM: Verify-Section-Header-Present Text:{string} Page:{string}")
+    public static void verifySectionHeaderPresent_D365CRM(String header_Text, String page) throws Exception {
+        String pageName = pageNameCheck(page);
+        String fieldLoc = fieldLocCheck(page,header_Text,"MAIN");
+
+        BrowserGlobal.iWaitUntilElementPresent(d365Loc.sectionHeader(pageName,fieldLoc,header_Text));
+        BrowserGlobal.iScrollToAnElement(d365Loc.sectionHeader(pageName,fieldLoc,header_Text));
+        BrowserGlobal.iAssertElementPresent(d365Loc.sectionHeader(pageName,fieldLoc,header_Text));
     }
 
 //    /**
@@ -1340,6 +1347,23 @@ public class D365CRM {
     }
 
     /**
+     * @param from_app [App you have presently logged in]
+     * @param to_app [App you want to switch to]
+     * [Check top left next to Dynamics logo]
+     */
+    @QAFTestStep(description = "D365CRM: Switch-App From:{0} To:{1}")
+    @And("D365CRM: Switch-App From:{string} To:{string}")
+    public static void switchApp_D365CRM(String from_app, String to_app) throws Exception {
+        BrowserGlobal.iWaitUntilElementPresent(d365Loc.link("Switching App","TOP_BAR",from_app));
+        BrowserGlobal.iScrollToAnElement(d365Loc.link("Switching App","TOP_BAR",from_app));
+        BrowserGlobal.iClickOn(d365Loc.link("Switching App","TOP_BAR",from_app));
+
+        BrowserGlobal.iWaitUntilElementPresent("xpath=//iframe[@title='AppLandingPage']");
+        BrowserGlobal.iSwitchToIFrameByIdOrName("AppLandingPage");
+        BrowserGlobal.iClickOn(d365Loc.link("Switching App","SWITCH_APP",to_app));
+    }
+
+    /**
      * @param fileName [File Name in Uploads Folder]
      * [Note: No instance feature available, Location available]
      */
@@ -1387,15 +1411,26 @@ public class D365CRM {
     public void loginTo_D365CRM(String name, String urlToOpen, String username, String password) throws Exception{
 
         BrowserGlobal.iOpenWebBrowser(urlToOpen);
-        BrowserGlobal.iInputInTo(username, loc.get("Login","input","Enter your email address, phone number or Skype."));
-        BrowserGlobal.iClickOn(loc.get("Login","button","Next"));
+        BrowserGlobal.iInputInTo(username,d365Loc.inputText("Login","NONE","Email"));
+        BrowserGlobal.iClickOn(d365Loc.button("Login","NONE","Next"));
         BrowserGlobal.iWaitForSeconds("2");
-        BrowserGlobal.iInputInTo(password, loc.get("Login","input","Password"));
-        BrowserGlobal.iClickOn(loc.get("Login","button","Sign in"));
+        BrowserGlobal.iInputInTo(password,d365Loc.inputText("Login","NONE","Password"));
+        BrowserGlobal.iClickOn(d365Loc.button("Login","NONE","Sign in"));
         BrowserGlobal.iWaitForSeconds("2");
-        BrowserGlobal.iClickOn(loc.get("Login","button","Yes"));
+        BrowserGlobal.iClickOn(d365Loc.button("Login","NONE","Yes"));
         BrowserGlobal.iWaitForSeconds("5");
         BrowserGlobal.iWaitForPageToLoad();
+
+//        BrowserGlobal.iInputInTo(username, loc.get("Login","input","Enter your email address, phone number or Skype."));
+//        BrowserGlobal.iInputInTo(username, "xpath=//input[contains(@placeholder,'Email') or contains(@aria-label,'Email')]");
+//        BrowserGlobal.iClickOn(loc.get("Login","button","Next"));
+//        BrowserGlobal.iWaitForSeconds("2");
+//        BrowserGlobal.iInputInTo(password, loc.get("Login","input","Password"));
+//        BrowserGlobal.iClickOn(loc.get("Login","button","Sign in"));
+//        BrowserGlobal.iWaitForSeconds("2");
+//        BrowserGlobal.iClickOn(loc.get("Login","button","Yes"));
+//        BrowserGlobal.iWaitForSeconds("5");
+//        BrowserGlobal.iWaitForPageToLoad();
 
 
         int signinCount = 0;
