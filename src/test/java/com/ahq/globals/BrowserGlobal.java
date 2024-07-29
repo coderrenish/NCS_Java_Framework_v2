@@ -123,6 +123,18 @@ public class BrowserGlobal {
         JavascriptExecutor js=(JavascriptExecutor)driver;
         js.executeScript("document.body.style.zoom='"+zoom+"'");
     }
+
+    /**
+     * Zooming browser window to X percentage
+     * I zoom browser window to {zoom} Percentage
+     */
+    @QAFTestStep(description = "I execute javascript {0}")
+    @And("I execute javascript {string}")
+    public static void iExecuteJavascript(String jsScript) {
+        WebDriver driver = new WebDriverTestBase().getDriver();
+        JavascriptExecutor js=(JavascriptExecutor)driver;
+        js.executeScript(jsScript);
+    }
     /**
      * Pressing on the RETURN or ENTER key in a field
      * : I press RETURN or ENTER key in {loc}
