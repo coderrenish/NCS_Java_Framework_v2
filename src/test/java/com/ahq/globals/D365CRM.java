@@ -1418,61 +1418,66 @@ public class D365CRM {
         BrowserGlobal.iClickOn(d365Loc.button("Login","NONE","Sign in"));
         BrowserGlobal.iWaitForSeconds("2");
         BrowserGlobal.iClickOn(d365Loc.button("Login","NONE","Yes"));
-        BrowserGlobal.iWaitForSeconds("5");
+        BrowserGlobal.iWaitForSeconds("2");
         BrowserGlobal.iWaitForPageToLoad();
-
-//        BrowserGlobal.iInputInTo(username, loc.get("Login","input","Enter your email address, phone number or Skype."));
-//        BrowserGlobal.iInputInTo(username, "xpath=//input[contains(@placeholder,'Email') or contains(@aria-label,'Email')]");
-//        BrowserGlobal.iClickOn(loc.get("Login","button","Next"));
-//        BrowserGlobal.iWaitForSeconds("2");
-//        BrowserGlobal.iInputInTo(password, loc.get("Login","input","Password"));
-//        BrowserGlobal.iClickOn(loc.get("Login","button","Sign in"));
-//        BrowserGlobal.iWaitForSeconds("2");
-//        BrowserGlobal.iClickOn(loc.get("Login","button","Yes"));
-//        BrowserGlobal.iWaitForSeconds("5");
-//        BrowserGlobal.iWaitForPageToLoad();
-
-
-        int signinCount = 0;
-        for (int i = 0; i < 10; i++) {
-            getBundle().setProperty("exec.email.report.fail","OFF");
-            signinCount = signinCount + 1;
-            if (BrowserGlobal.isElementVisibleWithTimeout(loc.get("ReLogin","button","Sign In"),"1500")) {
-                BrowserGlobal.iClickOn(loc.get("ReLogin","button","Sign In"));
-                BrowserGlobal.iWaitForPageToLoad();
-                BrowserGlobal.iWaitForMilliseconds("1500");
-            } else {
-                getBundle().setProperty("exec.email.report.fail","ON");
-                break;
-            }
-            getBundle().setProperty("exec.email.report.fail","ON");
-//            try {
-//                getBundle().setProperty("exec.email.report.fail","OFF");
-//                BrowserGlobal.iWaitUntilElementVisibleWithTimeout(loc.get("ReLogin","button","Sign In"),"15");
+        BrowserGlobal.iWaitForSeconds("5");
+        if (BrowserGlobal.isElementVisibleWithTimeout("xpath=//button[contains(@title,'Sign ')]","10000")) {
+            BrowserGlobal.iExecuteJavascript("var buttons=document.querySelectorAll('button[title^=\"Sign \"]');buttons.forEach((t=>{t.click()}));");
+        }
+//        BrowserGlobal.iExecuteJavascript("var buttons=document.querySelectorAll('button[title^=\"Sign \"]');buttons.forEach((t=>{t.click()}));");
+////<button type="button" title="Sign In" data-id="okButton" id="okButton_1" class="fui-Button r1alrhcs ___1akj6hk ffp7eso f1p3nwhy f11589ue f1q5o8ev f1pdflbu f1phragk f15wkkf3 f1s2uweq fr80ssc f1ukrpxl fecsdlb f1rq72xc fnp9lpt f1h0usnq fs4ktlq f16h9ulv fx2bmrt f1d6v5y2 f1rirnrt f1uu00uk fkvaka8 f1ux7til f9a0qzu f1lkg8j3 fkc42ay fq7113v ff1wgvm fiob0tu f1j6scgf f1x4h75k f4xjyn1 fbgcvur f1ks1yx8 f1o6qegi fcnxywj fmxjhhp f9ddjv3 f17t0x8g f194v5ow f1qgg65p fk7jm04 fhgccpy f32wu9k fu5nqqq f13prjl2 f1czftr5 f1nl83rv f12k37oa fr96u23"><div role="presentation" class="pa-go pa-er pa-aq pa-e ">Sign In</div></button>
+////        BrowserGlobal.iInputInTo(username, loc.get("Login","input","Enter your email address, phone number or Skype."));
+////        BrowserGlobal.iInputInTo(username, "xpath=//input[contains(@placeholder,'Email') or contains(@aria-label,'Email')]");
+////        BrowserGlobal.iClickOn(loc.get("Login","button","Next"));
+////        BrowserGlobal.iWaitForSeconds("2");
+////        BrowserGlobal.iInputInTo(password, loc.get("Login","input","Password"));
+////        BrowserGlobal.iClickOn(loc.get("Login","button","Sign in"));
+////        BrowserGlobal.iWaitForSeconds("2");
+////        BrowserGlobal.iClickOn(loc.get("Login","button","Yes"));
+////        BrowserGlobal.iWaitForSeconds("5");
+////        BrowserGlobal.iWaitForPageToLoad();
+//
+//
+//        int signinCount = 0;
+//        for (int i = 0; i < 10; i++) {
+//            getBundle().setProperty("exec.email.report.fail","OFF");
+//            signinCount = signinCount + 1;
+//            if (BrowserGlobal.isElementVisibleWithTimeout(loc.get("ReLogin","button","Sign In"),"1500")) {
 //                BrowserGlobal.iClickOn(loc.get("ReLogin","button","Sign In"));
 //                BrowserGlobal.iWaitForPageToLoad();
-//            } catch (Exception e) {
+//                BrowserGlobal.iWaitForMilliseconds("1500");
+//            } else {
 //                getBundle().setProperty("exec.email.report.fail","ON");
 //                break;
 //            }
 //            getBundle().setProperty("exec.email.report.fail","ON");
-        }
-//        System.out.println("==signinCount=> "+signinCount);
-        if (signinCount > 2) {
-            int count = signinCount;
-            for (int j = 0; j < signinCount; j++) {
-                try {
-                    getBundle().setProperty("exec.email.report.fail","OFF");
-                    count = count - 1;
-                    BrowserGlobal.iWaitUntilElementVisibleWithTimeout("xpath=(//button[@aria-label='Sign in'])["+count+"]","3");
-                    BrowserGlobal.iClickOn("xpath=(//button[@aria-label='Sign in'])["+count+"]");
-                    BrowserGlobal.iWaitForPageToLoad();
-                } catch (Exception e) {
-                    getBundle().setProperty("exec.email.report.fail","ON");
-                }
-                getBundle().setProperty("exec.email.report.fail","ON");
-            }
-        }
+////            try {
+////                getBundle().setProperty("exec.email.report.fail","OFF");
+////                BrowserGlobal.iWaitUntilElementVisibleWithTimeout(loc.get("ReLogin","button","Sign In"),"15");
+////                BrowserGlobal.iClickOn(loc.get("ReLogin","button","Sign In"));
+////                BrowserGlobal.iWaitForPageToLoad();
+////            } catch (Exception e) {
+////                getBundle().setProperty("exec.email.report.fail","ON");
+////                break;
+////            }
+////            getBundle().setProperty("exec.email.report.fail","ON");
+//        }
+////        System.out.println("==signinCount=> "+signinCount);
+//        if (signinCount > 2) {
+//            int count = signinCount;
+//            for (int j = 0; j < signinCount; j++) {
+//                try {
+//                    getBundle().setProperty("exec.email.report.fail","OFF");
+//                    count = count - 1;
+//                    BrowserGlobal.iWaitUntilElementVisibleWithTimeout("xpath=(//button[@aria-label='Sign in'])["+count+"]","3");
+//                    BrowserGlobal.iClickOn("xpath=(//button[@aria-label='Sign in'])["+count+"]");
+//                    BrowserGlobal.iWaitForPageToLoad();
+//                } catch (Exception e) {
+//                    getBundle().setProperty("exec.email.report.fail","ON");
+//                }
+//                getBundle().setProperty("exec.email.report.fail","ON");
+//            }
+//        }
 
     }
 
