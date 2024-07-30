@@ -1449,7 +1449,7 @@ public class D365CRM {
         BrowserGlobal.iWaitForSeconds("2");
         BrowserGlobal.iWaitForPageToLoad();
         BrowserGlobal.iWaitForSeconds("5");
-        if (BrowserGlobal.isElementVisibleWithTimeout("xpath=//button[contains(@title,'Sign ')]","10000")) {
+        if (BrowserGlobal.isElementVisibleWithTimeout("xpath=//button[contains(@title,'Sign ')]","15000")) {
             BrowserGlobal.iExecuteJavascript("var buttons=document.querySelectorAll('button[title^=\"Sign \"]');buttons.forEach((t=>{t.click()}));");
         }
 //        BrowserGlobal.iExecuteJavascript("var buttons=document.querySelectorAll('button[title^=\"Sign \"]');buttons.forEach((t=>{t.click()}));");

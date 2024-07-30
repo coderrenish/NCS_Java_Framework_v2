@@ -1044,6 +1044,7 @@ public class d365Loc {
                 case ("v9.1"):
                 case ("v9.2"):
                 default: {
+                    locEntry("xpath","//label[text()='<field_name>']//..//..//following-sibling::div/div[text()='*']");
                     locEntry("xpath","//label[text()='<field_name>']/following-sibling::span[text()='*']");
                     break;
                 }
