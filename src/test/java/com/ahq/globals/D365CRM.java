@@ -1448,9 +1448,18 @@ public class D365CRM {
         BrowserGlobal.iClickOn(d365Loc.button("Login","NONE","Yes"));
         BrowserGlobal.iWaitForSeconds("2");
         BrowserGlobal.iWaitForPageToLoad();
-        BrowserGlobal.iWaitForSeconds("5");
-        if (BrowserGlobal.isElementVisibleWithTimeout("xpath=//button[contains(@title,'Sign ')]","15000")) {
+//        BrowserGlobal.iWaitForSeconds("5");
+//        getBundle().setProperty("loc.temp.signin","{\"locator\":[\"xpath=//button[contains(@title,'Sign ')]\",\"xpath=//button[contains(@aria-label,'Sign ')]\"],\"desc\":\"Temp Sign in\"}");
+        System.out.println("==signin TRIGGER=> ");
+
+        if (BrowserGlobal.isElementVisibleWithTimeout(d365Loc.signInButton(),"15000")) {
+           System.out.println("==signin ENTERED=> ");
+
             BrowserGlobal.iExecuteJavascript("var buttons=document.querySelectorAll('button[title^=\"Sign \"]');buttons.forEach((t=>{t.click()}));");
+            BrowserGlobal.iExecuteJavascript("var buttons=document.querySelectorAll('button[aria-label^=\"Sign \"]');buttons.forEach((t=>{t.click()}));");
+
+        } else {
+            System.out.println("==signin NOT ENTERED=> ");
         }
 //        BrowserGlobal.iExecuteJavascript("var buttons=document.querySelectorAll('button[title^=\"Sign \"]');buttons.forEach((t=>{t.click()}));");
 ////<button type="button" title="Sign In" data-id="okButton" id="okButton_1" class="fui-Button r1alrhcs ___1akj6hk ffp7eso f1p3nwhy f11589ue f1q5o8ev f1pdflbu f1phragk f15wkkf3 f1s2uweq fr80ssc f1ukrpxl fecsdlb f1rq72xc fnp9lpt f1h0usnq fs4ktlq f16h9ulv fx2bmrt f1d6v5y2 f1rirnrt f1uu00uk fkvaka8 f1ux7til f9a0qzu f1lkg8j3 fkc42ay fq7113v ff1wgvm fiob0tu f1j6scgf f1x4h75k f4xjyn1 fbgcvur f1ks1yx8 f1o6qegi fcnxywj fmxjhhp f9ddjv3 f17t0x8g f194v5ow f1qgg65p fk7jm04 fhgccpy f32wu9k fu5nqqq f13prjl2 f1czftr5 f1nl83rv f12k37oa fr96u23"><div role="presentation" class="pa-go pa-er pa-aq pa-e ">Sign In</div></button>

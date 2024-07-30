@@ -1260,6 +1260,21 @@ public class d365Loc {
         return locGeneration("Scroll Vertical Tab Panel");
     }
 
+    public static String signInButton() throws Exception{
+        if (locCheck("signin", "OTHER", "SIGNIN_BUTTON", "")) {
+            switch (d365PlatformVersion) {
+                case ("v9.1"):
+                case ("v9.2"):
+                default: {
+                    locEntry("xpath","//button[contains(@title,'Sign ')]");
+                    locEntry("xpath","//button[contains(@aria-label,'Sign ')]");
+                    break;
+                }
+            }
+        }
+        return locGeneration("Scroll Vertical Tab Panel");
+    }
+
 //        case ("SCROLL_HORIZONTAL"): {
 //        locGeneratedField = "SCROLL_HORIZONTAL Bar:";
 //        switch (d365PlatformVersion) {
