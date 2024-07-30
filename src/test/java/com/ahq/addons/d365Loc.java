@@ -1037,6 +1037,34 @@ public class d365Loc {
         }
         return locGeneration(argFieldName);
     }
+
+    public static String fieldMandatory(String argPage, String argFieldLocation, String argFieldName) throws Exception{
+        if (locCheck(argPage, argFieldLocation, "FIELD_MANDATORY", argFieldName)) {
+            switch (d365PlatformVersion) {
+                case ("v9.1"):
+                case ("v9.2"):
+                default: {
+                    locEntry("xpath","//label[text()='<field_name>']/following-sibling::span[text()='*']");
+                    break;
+                }
+            }
+        }
+        return locGeneration(argFieldName);
+    }
+
+    public static String fieldSecured(String argPage, String argFieldLocation, String argFieldName) throws Exception{
+        if (locCheck(argPage, argFieldLocation, "FIELD_SECURED", argFieldName)) {
+            switch (d365PlatformVersion) {
+                case ("v9.1"):
+                case ("v9.2"):
+                default: {
+                    locEntry("xpath","//div[@aria-label='Secured <field_name>']");
+                    break;
+                }
+            }
+        }
+        return locGeneration(argFieldName);
+    }
     public static String tableHeader(String argPage, String argFieldLocation, String argFieldName) throws Exception{
         if (locCheck(argPage, argFieldLocation, "TABLE_HEADER", argFieldName)) {
             switch (d365PlatformVersion) {

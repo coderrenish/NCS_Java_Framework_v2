@@ -927,6 +927,34 @@ public class D365CRM {
     }
 
     /**
+     * @param field [Field name]
+     * @param page [Page name]
+     */
+    @QAFTestStep(description = "D365CRM: Verify-field-mandatory Field:{0} Page:{1}")
+    @And("D365CRM: Verify-field-mandatory Field:{string} Page:{string}")
+    public static void verifyFieldMandatory_D365CRM(String field, String page) throws Exception {
+        page = pageNameCheck(page);
+        String fieldLoc = fieldLocCheck(page,field,"MAIN");
+        BrowserGlobal.iWaitUntilElementPresent(d365Loc.fieldMandatory(page,fieldLoc,field));
+        BrowserGlobal.iScrollToAnElement(d365Loc.fieldMandatory(page,fieldLoc,field));
+        BrowserGlobal.iAssertElementVisible(d365Loc.fieldMandatory(page,fieldLoc,field));
+    }
+
+    /**
+     * @param field [Field name]
+     * @param page [Page name]
+     */
+    @QAFTestStep(description = "D365CRM: Verify-field-secured Field:{0} Page:{1}")
+    @And("D365CRM: Verify-field-secured Field:{string} Page:{string}")
+    public static void verifyFieldSecured_D365CRM(String field, String page) throws Exception {
+        page = pageNameCheck(page);
+        String fieldLoc = fieldLocCheck(page,field,"MAIN");
+        BrowserGlobal.iWaitUntilElementPresent(d365Loc.fieldSecured(page,fieldLoc,field));
+        BrowserGlobal.iScrollToAnElement(d365Loc.fieldSecured(page,fieldLoc,field));
+        BrowserGlobal.iAssertElementVisible(d365Loc.fieldSecured(page,fieldLoc,field));
+    }
+
+    /**
      * @param text [text to verify]
      * @param field [Field name]
      * @param page [Page name]
