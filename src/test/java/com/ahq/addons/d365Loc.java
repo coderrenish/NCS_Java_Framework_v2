@@ -1275,6 +1275,20 @@ public class d365Loc {
         return locGeneration("Scroll Vertical Tab Panel");
     }
 
+    public static String signOutButton() throws Exception{
+        if (locCheck("signout", "OTHER", "SIGNOUT_BUTTON", "")) {
+            switch (d365PlatformVersion) {
+                case ("v9.1"):
+                case ("v9.2"):
+                default: {
+                    locEntry("xpath","//div[contains(@id,'headerPicture')]");
+                    break;
+                }
+            }
+        }
+        return locGeneration("Scroll Vertical Tab Panel");
+    }
+
 //        case ("SCROLL_HORIZONTAL"): {
 //        locGeneratedField = "SCROLL_HORIZONTAL Bar:";
 //        switch (d365PlatformVersion) {

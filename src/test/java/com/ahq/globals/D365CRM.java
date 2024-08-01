@@ -1433,6 +1433,21 @@ public class D365CRM {
         new Actions(driver).scrollFromOrigin(scrollOrigin,0 , Integer.parseInt(scroll_value)).perform();
     }
 
+    /**
+     *
+      */
+    @QAFTestStep(description = "D365CRM: Logout from Dynamics")
+    @And("D365CRM: Logout from Dynamics")
+    public static void logoutFrom_D365CRM() throws Exception {
+        BrowserGlobal.iWaitUntilElementPresent(d365Loc.signOutButton());
+        BrowserGlobal.iScrollToAnElement(d365Loc.signOutButton());
+        BrowserGlobal.iClickOn(d365Loc.signOutButton());
+        BrowserGlobal.iWaitUntilElementPresent(d365Loc.button("Sign Out","OTHER","Sign out"));
+        BrowserGlobal.iMouseoverOn(d365Loc.button("Sign Out","OTHER","Sign out"));
+        BrowserGlobal.iWaitUntilElementEnabled(d365Loc.button("Sign Out","OTHER","Sign out"));
+        BrowserGlobal.iClickOn(d365Loc.button("Sign Out","OTHER","Sign out"));
+        BrowserGlobal.iWaitForSeconds("5");
+    }
 
     @QAFTestStep(description="D365CRM: Login to {0} with following details {1}, {2} and {3}")
     @And("D365CRM: Login to {string} with following details {string}, {string} and {string}")
