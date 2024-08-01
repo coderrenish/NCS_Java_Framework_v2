@@ -970,6 +970,20 @@ public class d365Loc {
         }
         return locGeneration(argFieldName);
     }
+    public static String selectOption(String argPage, String argFieldLocation, String argFieldName) throws Exception{
+        if (locCheck(argPage, argFieldLocation, "SELECT_DROPDOWN_OPTION", argFieldName)) {
+            switch (d365PlatformVersion) {
+                case ("v9.1"):
+                case ("v9.2"):
+                default: {
+                    locEntry("xpath","//select[@aria-label='<field_name>']//option[text()='<field_additional_val_1>']");
+                    break;
+                }
+            }
+        }
+        return locGeneration(argFieldName);
+    }
+
     public static String selectListBox(String argPage, String argFieldLocation, String argFieldName) throws Exception{
         if (locCheck(argPage, argFieldLocation, "SELECT_DROPDOWN_LISTBOX", argFieldName)) {
             switch (d365PlatformVersion) {

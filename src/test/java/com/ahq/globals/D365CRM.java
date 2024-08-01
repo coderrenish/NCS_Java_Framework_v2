@@ -1080,6 +1080,37 @@ public class D365CRM {
     }
 
     /**
+     * @param dropdown_Text_not_in_list [Text to be Verified not in list]
+     * @param field [Field name]
+     * @param page [Page name]
+     */
+    @QAFTestStep(description = "D365CRM: Verify-Select-List-Not-Have-Given-Value Text:{0} Field:{1} Page:{2}")
+    @And("D365CRM: Verify-Select-List-Not-Have-Given-Value Text:{string} Field:{string} Page:{string}")
+    public static void verifySelectListNotHaveGivenValue_D365CRM(String dropdown_Text_not_in_list, String field, String page) throws Exception {
+        String pageName = pageNameCheck(page);
+        String fieldLoc = fieldLocCheck(page,field,"MAIN");
+        String fieldName = fieldNameCheck(field);
+        String fieldDetails = fieldInstanceCheckAndAddVal_1(field,dropdown_Text_not_in_list);
+
+        if (getD365CrmVersion().equals("v9.2.nl")) {
+            BrowserGlobal.iWaitUntilElementPresent(d365Loc.button(pageName,fieldLoc,fieldName));
+            BrowserGlobal.iScrollToAnElement(d365Loc.button(pageName,fieldLoc,fieldName));
+            BrowserGlobal.iMouseoverOn(d365Loc.button(pageName,fieldLoc,fieldName));
+            BrowserGlobal.iClickOn(d365Loc.button(pageName,fieldLoc,fieldName));
+            BrowserGlobal.iWaitForSeconds("1");
+            BrowserGlobal.iAssertElementNotPresent(d365Loc.selectListBox(page,"DROPDOWN_LISTBOX",dropdown_Text_not_in_list));
+            BrowserGlobal.iClickOn(d365Loc.button(pageName,fieldLoc,fieldName));
+        } else {
+            BrowserGlobal.iWaitUntilElementPresent(d365Loc.select(pageName,fieldLoc,fieldName));
+            BrowserGlobal.iScrollToAnElement(d365Loc.select(pageName,fieldLoc,fieldName));
+            BrowserGlobal.iClickOn(d365Loc.select(pageName,fieldLoc,fieldName));
+            BrowserGlobal.iWaitForSeconds("1");
+            BrowserGlobal.iAssertElementNotPresent(d365Loc.selectOption(page,fieldLoc,fieldDetails));
+            BrowserGlobal.iClickOn(d365Loc.select(pageName,fieldLoc,fieldName));
+        }
+    }
+
+    /**
      * @param header_Text [Header Text to be verified present]
      * @param page [Page name]
      */
