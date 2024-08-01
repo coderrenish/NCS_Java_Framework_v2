@@ -1265,8 +1265,12 @@ public class d365Loc {
                 case ("v9.1"):
                 case ("v9.2"):
                 default: {
-                    locEntry("xpath","//button[contains(@title,'Sign ')]");
-                    locEntry("xpath","//button[contains(@aria-label,'Sign ')]");
+                    locEntry("xpath","//button[contains(@title,'Sign In')]");
+                    locEntry("xpath","//button[contains(@aria-label,'Sign In')]");
+                    locEntry("xpath","//span[contains(text(),'Sign In')]");
+                    locEntry("xpath","//button[contains(@title,'Sign in')]");
+                    locEntry("xpath","//button[contains(@aria-label,'Sign in')]");
+                    locEntry("xpath","//span[contains(text(),'Sign in')]");
                     break;
                 }
             }

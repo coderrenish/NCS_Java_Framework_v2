@@ -1456,13 +1456,14 @@ public class D365CRM {
         BrowserGlobal.iWaitUntilElementEnabled(d365Loc.button("Sign Out","OTHER","Sign out"));
         BrowserGlobal.iClickOn(d365Loc.button("Sign Out","OTHER","Sign out"));
         BrowserGlobal.iWaitForSeconds("5");
+        BrowserGlobal.iCloseWebBrowser();
     }
 
     @QAFTestStep(description="D365CRM: Login to {0} with following details {1}, {2} and {3}")
     @And("D365CRM: Login to {string} with following details {string}, {string} and {string}")
     public void loginTo_D365CRM(String name, String urlToOpen, String username, String password) throws Exception{
 
-        BrowserGlobal.iOpenWebBrowser(urlToOpen);
+        BrowserGlobal.iOpenWebBrowserAndMaximize(urlToOpen);
         BrowserGlobal.iInputInTo(username,d365Loc.inputText("Login","NONE","Email"));
         BrowserGlobal.iClickOn(d365Loc.button("Login","NONE","Next"));
         BrowserGlobal.iWaitForSeconds("2");
@@ -1475,13 +1476,12 @@ public class D365CRM {
 //        BrowserGlobal.iWaitForSeconds("5");
 //        getBundle().setProperty("loc.temp.signin","{\"locator\":[\"xpath=//button[contains(@title,'Sign ')]\",\"xpath=//button[contains(@aria-label,'Sign ')]\"],\"desc\":\"Temp Sign in\"}");
         System.out.println("==signin TRIGGER=> ");
-
         if (BrowserGlobal.isElementVisibleWithTimeout(d365Loc.signInButton(),"15000")) {
            System.out.println("==signin ENTERED=> ");
-
-            BrowserGlobal.iExecuteJavascript("var buttons=document.querySelectorAll('button[title^=\"Sign \"]');buttons.forEach((t=>{t.click()}));");
-            BrowserGlobal.iExecuteJavascript("var buttons=document.querySelectorAll('button[aria-label^=\"Sign \"]');buttons.forEach((t=>{t.click()}));");
-
+            BrowserGlobal.iExecuteJavascript("var buttons=document.querySelectorAll('button[title^=\"Sign In\"]');buttons.forEach((t=>{t.click()}));");
+            BrowserGlobal.iExecuteJavascript("var buttons=document.querySelectorAll('button[aria-label^=\"Sign In\"]');buttons.forEach((t=>{t.click()}));");
+            BrowserGlobal.iExecuteJavascript("var buttons=document.querySelectorAll('button[title^=\"Sign in\"]');buttons.forEach((t=>{t.click()}));");
+            BrowserGlobal.iExecuteJavascript("var buttons=document.querySelectorAll('button[aria-label^=\"Sign in\"]');buttons.forEach((t=>{t.click()}));");
         } else {
             System.out.println("==signin NOT ENTERED=> ");
         }
