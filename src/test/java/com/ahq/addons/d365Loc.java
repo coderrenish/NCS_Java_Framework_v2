@@ -1237,6 +1237,7 @@ public class d365Loc {
                 default: {
                     locEntry("xpath", "(//h2)[1]");
                     locEntry("xpath", "(//h3)[1]");
+                    locEntry("xpath", "(//label)[1]");
                     break; }
             }
         }

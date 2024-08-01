@@ -901,13 +901,15 @@ public class D365CRM {
 //        BrowserGlobal.iAssertElementPresent(d365Loc.loc(page,"HEADER",header_text));
         BrowserGlobal.iAssertTitlePartialText(header_text);
         if ( BrowserGlobal.isElementVisibleWithTimeout(d365Loc.scrollVerticalUsingSubHeader(page,"MAIN", ""), "3000")) {
+            BrowserGlobal.iScrollUsingMouseWheelByValueFromVisibleField("3000",d365Loc.scrollVerticalUsingSubHeader(page,"MAIN", ""));
+            BrowserGlobal.iWaitForMilliseconds("1000");
+            BrowserGlobal.iScrollUsingMouseWheelByValueFromVisibleField("2000",d365Loc.scrollVerticalUsingSubHeader(page,"MAIN", ""));
+            BrowserGlobal.iWaitForMilliseconds("1000");
+            BrowserGlobal.iScrollUsingMouseWheelByValueFromVisibleField("-5000",d365Loc.scrollVerticalUsingSubHeader(page,"MAIN", ""));
+        } else {
             BrowserGlobal.iScrollUsingMouseWheelByValueFromVisibleField("5000",d365Loc.scrollVertical(page));
             BrowserGlobal.iWaitForMilliseconds("500");
             BrowserGlobal.iScrollUsingMouseWheelByValueFromVisibleField("-5000",d365Loc.scrollVertical(page));
-        } else {
-            BrowserGlobal.iScrollUsingMouseWheelByValueFromVisibleField("2000",d365Loc.scrollVertical(page));
-            BrowserGlobal.iWaitForMilliseconds("500");
-            BrowserGlobal.iScrollUsingMouseWheelByValueFromVisibleField("-2000",d365Loc.scrollVertical(page));
         }
 
     }
