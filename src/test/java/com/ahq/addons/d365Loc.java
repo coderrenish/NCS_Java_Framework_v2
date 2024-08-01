@@ -1251,9 +1251,7 @@ public class d365Loc {
                 default: {
                     locEntry("xpath","(//div[@role='tabpanel'][@aria-label='<field_name>']//H3)[1]");
                     locEntry("xpath","(//div[@role='tabpanel'][@aria-label='<field_name>']//H2)[1]");
-                    locEntry("xpath","(//div[contains(@id,'tab-section')]//H1)[1]");
-                    locEntry("xpath","(//div[contains(@id,'tab-section')]//H2)[1]");
-                    locEntry("xpath","(//div[contains(@id,'tab-section')]//H3)[1]");
+                    locEntry("xpath","(//div[@role='tabpanel'][@aria-label='<field_name>']//LABEL)[1]");
                     break;
                 }
             }
