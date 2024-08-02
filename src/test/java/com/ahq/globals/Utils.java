@@ -35,7 +35,7 @@ public class Utils {
     @QAFTestStep(description = "Utils: Generate date from current date by plus or minus years {0} into variable {1}")
     @And("Utils: Generate date from current date by plus or minus years {string} into variable {string}")
     public static void generateDateFromCurrentDateByPlusOrMinusYears_Utils(String years, String varName) throws Exception {
-        String dateGenerated = dateTime_currentTimeWithFormatPlusAdditionalDays("dd/mm/yyyy",Integer.parseInt(years)*366);
+        String dateGenerated = dateTime_currentTimeWithFormatPlusAdditionalYears("dd/mm/yyyy",Integer.parseInt(years));
         BrowserGlobal.iStoreValueIntoVariable(dateGenerated, varName);
     }
 
@@ -50,6 +50,7 @@ public class Utils {
     public static String dateTime_currentDate() { return UtilDateTime.currentDate();}
     public static String dateTime_currentDatePlusAdditionalDays(int numberOfAdditionalDays) { return UtilDateTime.currentDatePlusAdditionalDays(numberOfAdditionalDays);}
     public static String dateTime_currentTimeWithFormatPlusAdditionalDays(String timeFormat, int numberOfAdditionalDays) { return UtilDateTime.currentTimeWithFormatPlusAdditionalDays(timeFormat,numberOfAdditionalDays);}
+    public static String dateTime_currentTimeWithFormatPlusAdditionalYears(String timeFormat, int numberOfAdditionalYears) { return UtilDateTime.currentTimeWithFormatPlusAdditionalYears(timeFormat,numberOfAdditionalYears);}
 
     public static String dateTime_currentDateTime() { return UtilDateTime.currentDateTime();}
     public static String dateTime_currentDateWithFormat(String dateFormat) { return UtilDateTime.currentDateWithFormat(dateFormat);}
