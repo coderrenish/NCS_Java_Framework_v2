@@ -41,6 +41,13 @@ public class UtilDateTime {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
         return formatter.format(localDateTimePlusAdditionalDays);
     }
+
+    public static String currentTimeWithFormatPlusAdditionalYears(String format, int numberOfAdditionalYears) {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        LocalDateTime localDateTimePlusAdditionalDays = localDateTime.plusYears(numberOfAdditionalYears);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
+        return formatter.format(localDateTimePlusAdditionalDays);
+    }
     
     public static String dateWithFormatAndBusinessDaysFromCurrent(String format, int numberOfAdditionalDays) {
         LocalDateTime currentDate = LocalDateTime.now();
