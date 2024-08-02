@@ -25,15 +25,15 @@ public class Utils {
         BrowserGlobal.iComment("== Encrypted Password is: " + password_encrypt(password));
     }
 
-    @QAFTestStep(description = "Utils: Generate date from current date by plus or minus days {0} in to variable {1}")
-    @And("Utils: Generate date from current date by plus or minus days {string} in to variable {string}")
+    @QAFTestStep(description = "Utils: Generate date from current date by plus or minus days {0} into variable {1}")
+    @And("Utils: Generate date from current date by plus or minus days {string} into variable {string}")
     public static void generateDateFromCurrentDateByPlusOrMinusDays_Utils(String days, String varName) throws Exception {
         String dateGenerated = dateTime_currentTimeWithFormatPlusAdditionalDays("dd/mm/yyyy",Integer.parseInt(days));
         BrowserGlobal.iStoreValueIntoVariable(dateGenerated, varName);
     }
 
-    @QAFTestStep(description = "Utils: Generate date from current date by plus or minus years {0} in to variable {1}")
-    @And("Utils: Generate date from current date by plus or minus years {string} in to variable {string}")
+    @QAFTestStep(description = "Utils: Generate date from current date by plus or minus years {0} into variable {1}")
+    @And("Utils: Generate date from current date by plus or minus years {string} into variable {string}")
     public static void generateDateFromCurrentDateByPlusOrMinusYears_Utils(String years, String varName) throws Exception {
         String dateGenerated = dateTime_currentTimeWithFormatPlusAdditionalDays("dd/mm/yyyy",Integer.parseInt(years)*366);
         BrowserGlobal.iStoreValueIntoVariable(dateGenerated, varName);
