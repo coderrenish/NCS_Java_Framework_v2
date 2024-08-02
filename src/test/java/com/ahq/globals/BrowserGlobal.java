@@ -604,6 +604,7 @@ public class BrowserGlobal {
      * @param value [Value to set in the comment]
      */
     @QAFTestStep(description = "I comment {value}")
+    @And("I comment {string}")
     public static void iComment(String value) {
         System.out.printf("COMMENT: %s \n", value);
     }
