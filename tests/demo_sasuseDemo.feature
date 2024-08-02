@@ -15,12 +15,13 @@ Feature: This is a test feature file
     And: I click on "loc.demo.login.button.login"
     Result: I assert text present in page "Swag Labs"
     And: I assert "loc.demo.home.text.logo" text is "Swag Labs"
-
+    * Utils: Generate date from current date by plus or minus years "-2" in to variable "var.gen.date"
+    * I comment "======> ${var.gen.date}"
 
   @DEMO-TST-02
     @TestCaseId:DEMO-TST-02
     @PRIORITY:2
-  Scenario Outline: Test scenario using Test Data directly, Environment Variable, Encrypted Password & Globals (without writing any Step definitions)
+  Scenario Outline: Test scenario using Test Data directly, Environment Variable, Encrypted Password & Globals (without writing any Step definitions) "${env.url}"
   Step: I open the web browser with "${env.url}"
   And: I fill "${username}" into "loc.demo.login.input.username"
   And: I fill "<password>" into "loc.demo.login.input.password"
@@ -32,7 +33,7 @@ Feature: This is a test feature file
     Examples:
     | username      | password                       |
     | standard_user | pwd.YzJWamNtVjBYM05oZFdObA==   |
-    | standard_user | pwd.YzJWamNtVjBYM05oZFdObA==   |
+    | standard_user1 | pwd.YzJWamNtVjBYM05oZFdObA==   |
 
 
   @DEMO-TST-03
@@ -100,14 +101,16 @@ Feature: This is a test feature file
     @PRIORITY:6
     @SIT
     @SMOKE
-  Scenario Outline: Test scenario using Step Definition with new Web
+  Scenario Outline: Test scenario using Step Definition with new Web "${env.url}", "${username}"
     Given I login to SauseDemo using "${env.url}", "<username>" and "<password>"
     Then I Verify "Homepage" page header text is "Products"
     Then I Verify "Homepage" page title text is "Swag Labs"
-    * I wait for "5" seconds
+#    * I wait for "5" seconds
 
 #    Examples: {'dataFile':'resources/data/demo_test_data.xlsx','sheetName':'${env.code}', 'filter':'_ID==\"TST-04\" and _STATUS==\"yes\" and _INSTANCE==1'}
     Examples: {'dataFile':'resources/data/demo_test_data.csv', 'filter':'_ID==\"DEMO-TST-04\" and _STATUS==\"yes\"'}
 
 
+Given D365CRM: Login to "sfsdf" with following details "dfdf", "dfdf" and "dfdf"
 
+Given D365CRM: Click-Button Field:"Submit" Page:"dfdfdfd"

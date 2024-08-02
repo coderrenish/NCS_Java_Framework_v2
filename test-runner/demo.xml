@@ -23,7 +23,7 @@
 <!--      <class name="com.qmetry.qaf.automation.step.client.text.BDDTestFactory2"/>-->
 <!--    </classes>-->
 <!--  </test>-->
-<test name="Demo Tests - TST-01" enabled="true" preserve-order="false">
+<test name="Demo Tests - TST-01 - Chrome" enabled="true" preserve-order="false">
   <parameter name="log4j.logger.freemarker.cache" value="INFO, CONSOLE"/>
   <parameter name="exec.name" value="Config-1 Execution 2"/>
   <parameter name="exec.index" value="1"/>

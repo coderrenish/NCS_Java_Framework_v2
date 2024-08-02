@@ -111,3 +111,6 @@ Feature: Funding Components Test cases
   Result: Wait-And-Verify-Page-Header Text:"Funding Components" in "Funding Components" Page
   Step: Top-Nav: Click-On-Button Text:"Create"
   # Step: Top-Nav: Select-Table-Row-And-Click-On-Button Row:"2" Button:"Activity Log"
+
+
+  Given D36

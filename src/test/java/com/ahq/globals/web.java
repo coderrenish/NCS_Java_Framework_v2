@@ -523,12 +523,11 @@ public class web {
      * @param input_value [Input value to fill]
      * @param field_input [Input field name to fill]
      */
-    @QAFTestStep(description = "Web: Input-Text-With-Placeholder Value:{0} Field:{1}")
+    @QAFTestStep(description = "Web: Input-Text-With-Placeholder-Or-No-Label Value:{0} Field:{1}")
     @And("Web: Input-Text-With-Placeholder Value:{string} Field:{string}")
-    public static void inputTextWithPlaceholder_Web(String input_value, String field_input) throws Exception {
+    public static void inputTextWithPlaceholderOrNoLabel_Web(String input_value, String field_input) throws Exception {
         BrowserGlobal.iFillInTo(input_value,waitFieldToBePresentScrollAndEnabled(patternLoc.input(getPageName(),field_input,false)));
     }
-
 
 
     /**

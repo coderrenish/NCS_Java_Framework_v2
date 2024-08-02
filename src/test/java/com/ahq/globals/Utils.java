@@ -12,8 +12,8 @@ public class Utils {
      * : I switch to parent window
      * [Note: Returns value]
      */
-    @QAFTestStep(description = "Utils: Generate Singapore NRIC with type {0} and age {1} to variable {2}")
-    @And("Utils: Generate Singapore NRIC with type {string} and age {string} to variable {string}")
+    @QAFTestStep(description = "Utils: Generate Singapore NRIC with type {0} and age {1} into variable {2}")
+    @And("Utils: Generate Singapore NRIC with type {string} and age {string} into variable {string}")
     public static void generateSingaporeNricToVar_Utils(String type, String age, String varName) {
         String NRIC = Utils.nric_singapore_generate(type, age);
         BrowserGlobal.iStoreValueIntoVariable(NRIC, varName);
