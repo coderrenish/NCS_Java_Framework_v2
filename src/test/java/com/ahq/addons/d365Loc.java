@@ -856,6 +856,7 @@ public class d365Loc {
                 default: {
                     locEntry("xpath", "//h2[@title='<field_name>']");
                     locEntry("xpath", "//h3[text()='<field_name>']");
+                    locEntry("xpath", "//iframe[@title='<field_name>']/preceding-sibling::label[@aria-label='<field_name>']");
                     break; }
             }
         }
