@@ -291,14 +291,13 @@ public class D365CRM {
     }
 
     /**
-     * @param field [Button Name]
      * @param page [Page Name]
      */
-    @And("D365CRM: Click-Close-Window Field:{string} Page:{string}")
-    @QAFTestStep(description = "D365CRM: Click-Close-Window Field:{0} Page:{1}")
-    public static void clickCloseWindow_D365CRM(String field, String page) throws Exception {
+    @And("D365CRM: Click-Close-Window Page:{string}")
+    @QAFTestStep(description = "D365CRM: Click-Close-Window Page:{0}")
+    public static void clickCloseWindow_D365CRM(String page) throws Exception {
         String pageName = pageNameCheck(page);
-        String fieldLoc = fieldLocCheck(page,field,"MAIN");
+        String fieldLoc = fieldLocCheck(page,"","MAIN");
 
         BrowserGlobal.iScrollToAnElement(d365Loc.button(pageName,fieldLoc,"Close"));
         BrowserGlobal.iWaitUntilElementVisible(d365Loc.button(pageName,fieldLoc,"Close"));
@@ -1146,6 +1145,7 @@ public class D365CRM {
         page = pageNameCheck(page);
         String fieldLoc = fieldLocCheck(page,text,"OTHER");
         BrowserGlobal.iWaitUntilElementVisible(d365Loc.text(page,fieldLoc,text));
+        BrowserGlobal.iScrollToAnElement(d365Loc.text(page,fieldLoc,text));
         BrowserGlobal.iAssertElementPresent(d365Loc.text(page,fieldLoc,text));
     }
 
@@ -1490,8 +1490,8 @@ public class D365CRM {
         BrowserGlobal.iCloseWebBrowser();
     }
 
-    @QAFTestStep(description="D365CRM: Login to {0} with following details {1}, {2} and {3}")
-    @And("D365CRM: Login to {string} with following details {string}, {string} and {string}")
+    @QAFTestStep(description="D365CRM: Login to {0} with following details Url:{1}, Username:{2} and Password:{3}")
+    @And("D365CRM: Login to {string} with following details Url:{string}, Username:{string} and Password:{string}")
     public void loginTo_D365CRM(String name, String urlToOpen, String username, String password) throws Exception{
 
         BrowserGlobal.iOpenWebBrowserAndMaximize(urlToOpen);
@@ -1511,6 +1511,7 @@ public class D365CRM {
            System.out.println("==signin ENTERED=> ");
             BrowserGlobal.iExecuteJavascript("var buttons=document.querySelectorAll('button[title^=\"Sign In\"]');buttons.forEach((t=>{t.click()}));");
             BrowserGlobal.iExecuteJavascript("var buttons=document.querySelectorAll('button[aria-label^=\"Sign In\"]');buttons.forEach((t=>{t.click()}));");
+            BrowserGlobal.iWaitForSeconds("2");
             BrowserGlobal.iExecuteJavascript("var buttons=document.querySelectorAll('button[title^=\"Sign in\"]');buttons.forEach((t=>{t.click()}));");
             BrowserGlobal.iExecuteJavascript("var buttons=document.querySelectorAll('button[aria-label^=\"Sign in\"]');buttons.forEach((t=>{t.click()}));");
         } else {

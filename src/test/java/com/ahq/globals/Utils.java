@@ -35,7 +35,7 @@ public class Utils {
     @QAFTestStep(description = "Utils: Generate date from current date by plus or minus years {0} into variable {1}")
     @And("Utils: Generate date from current date by plus or minus years {string} into variable {string}")
     public static void generateDateFromCurrentDateByPlusOrMinusYears_Utils(String years, String varName) throws Exception {
-        String dateGenerated = dateTime_currentTimeWithFormatPlusAdditionalYears("dd/mm/yyyy",Integer.parseInt(years));
+        String dateGenerated = dateTime_currentTimeWithFormatPlusAdditionalYears("d/m/yyyy",Integer.parseInt(years));
         BrowserGlobal.iStoreValueIntoVariable(dateGenerated, varName);
     }
 

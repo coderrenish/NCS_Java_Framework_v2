@@ -15,8 +15,14 @@ Feature: This is a test feature file
     And: I click on "loc.demo.login.button.login"
     Result: I assert text present in page "Swag Labs"
     And: I assert "loc.demo.home.text.logo" text is "Swag Labs"
-    * Utils: Generate date from current date by plus or minus years "-2" in to variable "var.gen.date"
+    * Utils: Generate Singapore NRIC with type "FIN" and age "3" into variable "var.nric"
+    * Utils: Generate date from current date by plus or minus years "-3" into variable "var.gen.date"
+    * I comment "======> ${var.nric}"
     * I comment "======> ${var.gen.date}"
+    * I comment "${var.nric}@gmail.com"
+
+
+
 
   @DEMO-TST-02
     @TestCaseId:DEMO-TST-02

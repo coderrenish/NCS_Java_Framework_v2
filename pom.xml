@@ -16,7 +16,7 @@
     <sourceVersion>11</sourceVersion>
     <targetVersion>11</targetVersion>
     <qaf.version>4.0.0-RC3</qaf.version>
-    <qaf-support-ws.version>4.0.0-RC3</qaf-support-ws.version>
+    <qaf-support-ws.version>4.0.0-RC2</qaf-support-ws.version>
     <selenium.version>4.15.0</selenium.version>
     <test.results.dir>test-results</test.results.dir>
     <run.time>${maven.build.timestamp}</run.time>

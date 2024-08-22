@@ -8,6 +8,7 @@ public class demoHomePage {
     @QAFTestStep(description="Home: I verify I'm in homepage")
     public void homeIVerifyIMInHomepage() throws Exception {
         BrowserGlobal.iAssertTextPresentInPage("Products");
+
     }
 
     @QAFTestStep(description="TEST: I test {0}")

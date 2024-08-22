@@ -15,6 +15,7 @@ import static com.qmetry.qaf.automation.core.ConfigurationManager.getBundle;
 import com.qmetry.qaf.automation.step.QAFTestStep;
 import com.sun.jersey.api.client.ClientResponse;
 import com.jayway.jsonpath.JsonPath;
+import io.cucumber.java.en.And;
 
 public class ApiGlobal {
     private static String tmpApiResBody;
@@ -32,14 +33,15 @@ public class ApiGlobal {
      * @param argRequest
      */
     @QAFTestStep(description = "I request api {0}")
+    @And("I request api {string}")
     public static void iRequestApi(String argRequest) {
 //        Object tmpRequest = argRequest;
         tmpApiResponse = WsStep.userRequests(argRequest);
-        InputStream tmpInputStream = tmpApiResponse.getEntityInputStream();
-        try (Stream<String> lines = new BufferedReader(new InputStreamReader(tmpInputStream)).lines()) {
-            tmpApiResBody = lines.collect(Collectors.joining("\n"));
-            System.out.println(argRequest + " == API Response =====>  "  + tmpApiResBody);
-        }
+//        InputStream tmpInputStream = tmpApiResponse.getEntityInputStream();
+//        try (Stream<String> lines = new BufferedReader(new InputStreamReader(tmpInputStream)).lines()) {
+//            tmpApiResBody = lines.collect(Collectors.joining("\n"));
+//            System.out.println(argRequest + " == API Response =====>  "  + tmpApiResBody);
+//        }
     }
 
 
@@ -152,6 +154,7 @@ public class ApiGlobal {
      * @param status
      */
     @QAFTestStep(description = "I assert api response status is {0}")
+    @And("I assert api response status is {string}")
     public static void iAssertApiResponseStatus(String status) {
         WsStep.responseShouldHaveStatus(status);
     }
