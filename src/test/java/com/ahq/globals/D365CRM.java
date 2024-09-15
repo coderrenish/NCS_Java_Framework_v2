@@ -1356,6 +1356,24 @@ public class D365CRM {
         tableScrollUp(tempRowNum, page);
     }
 
+    /**
+     * @param row_number [Table row number after header from top to bottom starting from 1]
+     * @param column_number [Table column number from left to right starting from 1]
+     * @param to_variable [Variable Name to store the value]
+     */
+    @QAFTestStep(description = "D365CRM: Assign-Table-Cell-Value-In-Section-To-Variable Section:{0} Row:{1} Column:{2} To-Variable:{3} Page:{4}")
+    @And("D365CRM: Assign-Table-Cell-Value-In-Section-To-Variable Section:{string} Row:{string} Column:{string} To-Variable:{string} Page:{string}")
+    public static void storeTableCellValueInSectionToVariable_D365CRM(String section, String row_number, String column_number, String to_variable, String page) throws Exception {
+        int tempRowNum = Integer.parseInt(row_number) + 1;
+        int tempColNum = Integer.parseInt(column_number) + 1;
+        tableScrollDown(tempRowNum, page);
+        tableScrollRight(tempRowNum, tempColNum, page);
+        BrowserGlobal.iWaitUntilElementVisibleWithTimeout(d365Loc.tableCell(page,"TABLE","cell::"+section+"::"+tempRowNum+"::1"),"2");
+        BrowserGlobal.iStoreValueIntoVariable(BrowserGlobal.iGetTextFromInnerHtml(d365Loc.tableCellValue(page,"TABLE","cell::none::"+tempRowNum+"::"+tempColNum+"::"+section)),to_variable);
+        tableScrollLeft(tempRowNum, tempColNum, page);
+        tableScrollUp(tempRowNum, page);
+    }
+
 //    /**
 //     * @param cell_value [cell value to be Verified]
 //     * @param row_number [Table row number after header from top to bottom starting from 1]
@@ -1492,7 +1510,7 @@ public class D365CRM {
 
     @QAFTestStep(description="D365CRM: Login to {0} with following details Url:{1}, Username:{2} and Password:{3}")
     @And("D365CRM: Login to {string} with following details Url:{string}, Username:{string} and Password:{string}")
-    public void loginTo_D365CRM(String name, String urlToOpen, String username, String password) throws Exception{
+    public static void loginTo_D365CRM(String name, String urlToOpen, String username, String password) throws Exception{
 
         BrowserGlobal.iOpenWebBrowserAndMaximize(urlToOpen);
         BrowserGlobal.iInputInTo(username,d365Loc.inputText("Login","NONE","Email"));

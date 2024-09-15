@@ -721,7 +721,7 @@ public class d365Loc {
             varLocValue = varLocValue.replaceAll("<field_instance>",fieldInstance);
             varLocValue = varLocValue.replaceAll("<field_additional_val_1>",fieldAdditionalVal_1);
             varLocValue = varLocValue.replaceAll("<field_additional_val_2>",fieldAdditionalVal_2);
-            varLocValue = varLocValue.replaceAll("<field_additional_val_2>",fieldAdditionalVal_3);
+            varLocValue = varLocValue.replaceAll("<field_additional_val_3>",fieldAdditionalVal_3);
 
             if (!fieldInstance.isEmpty() && NumberUtils.isParsable(fieldInstance)) {
                 varLocValue = fieldInstanceTagStart + varLocValue + fieldInstanceTagEnd;
@@ -733,7 +733,7 @@ public class d365Loc {
             varLocValue = varLocValue.replaceAll("<field_instance>",fieldInstance);
             varLocValue = varLocValue.replaceAll("<field_additional_val_1>",fieldAdditionalVal_1);
             varLocValue = varLocValue.replaceAll("<field_additional_val_2>",fieldAdditionalVal_2);
-            varLocValue = varLocValue.replaceAll("<field_additional_val_2>",fieldAdditionalVal_3);
+            varLocValue = varLocValue.replaceAll("<field_additional_val_3>",fieldAdditionalVal_3);
             varLocValue =  argLocType + "=" + varLocValue;
         }
         locGeneratedVal.add(varLocValue);
@@ -1160,7 +1160,22 @@ public class d365Loc {
                 case ("v9.1"): {locEntry("xpath","//div[@aria-rowindex='<field_additional_val_1>']/descendant::div[@aria-colindex='<field_additional_val_2>']/label"); break;}
                 case ("v9.2"):
                 default: {
+                    locEntry("xpath","//section[@aria-label='<field_additional_val_3>']//div[@aria-rowindex='<field_additional_val_1>']/descendant::div[@aria-colindex='<field_additional_val_2>']/descendant::div[contains(@id,'tooltip')]");
                     locEntry("xpath","//div[@aria-rowindex='<field_additional_val_1>']/descendant::div[@aria-colindex='<field_additional_val_2>']/descendant::div[contains(@id,'tooltip')]");
+                    break;
+                }
+            }
+        }
+        return locGeneration(argCellDetails);
+    }
+
+    public static String tableCellValueInSection(String argPage, String argFieldLocation, String argSection, String argCellDetails) throws Exception{
+        if (locCheck(argPage, argFieldLocation, "TABLE_CELL_VALUE_GET", argCellDetails)) {
+            switch (d365PlatformVersion) {
+                case ("v9.1"): {locEntry("xpath","//section[@aria-label='Task']//div[@aria-rowindex='<field_additional_val_1>']/descendant::div[@aria-colindex='<field_additional_val_2>']/label"); break;}
+                case ("v9.2"):
+                default: {
+                    locEntry("xpath","//section[@aria-label='Task']//div[@aria-rowindex='<field_additional_val_1>']/descendant::div[@aria-colindex='<field_additional_val_2>']/descendant::div[contains(@id,'tooltip')]");
                     break;
                 }
             }
