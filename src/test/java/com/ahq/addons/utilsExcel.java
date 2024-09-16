@@ -110,9 +110,9 @@ public class utilsExcel {
                 CellStyle cellDataStyle = workbook.createCellStyle();
                 DataFormat cellDataFormat = workbook.createDataFormat();
 
-                System.out.println("=====START=>" + tempRow);
+//                System.out.println("=====START=>" + tempRow);
                 excelCell.setCellValue(data);
-                System.out.println("=====END=>" + tempRow);
+//                System.out.println("=====END=>" + tempRow);
                 if (!cellType.equals("N/A")) {
                     cellDataStyle.setDataFormat(cellDataFormat.getFormat(cellType));
                     excelCell.setCellStyle(cellDataStyle);
