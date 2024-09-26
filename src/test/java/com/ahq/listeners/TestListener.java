@@ -53,7 +53,7 @@ import static com.qmetry.qaf.automation.core.ConfigurationManager.getBundle;
                     String key = entry.getKey();
                     String value = entry.getValue().toString();
                     // Check if the key contains "TestCaseId"
-                    if (key.contains("TestCaseId")) {
+                    if (key.contains("TagGroup")) {
                         threadedTestCategories.get().add(value);
                     }
                 }
@@ -113,6 +113,8 @@ import static com.qmetry.qaf.automation.core.ConfigurationManager.getBundle;
         @Override
         public void onTestFailedButWithinSuccessPercentage(ITestResult iTestResult) {
         }
+
+
 
         @Override
         public void onStart(ITestContext iTestContext) {

@@ -27,6 +27,7 @@ import static com.ahq.globals.utilities.UtilPassword.SECRET_STRINGS;
 
 
 public class StepListener implements QAFTestStepListener {
+    TestStep step;
 
     public static ThreadLocal<List<StepExecutionTracker>> threadedExecutedTestSteps = new ThreadLocal<>();
     public static ThreadLocal<List<ExtentTest>> threadedExtentTestNodes = new ThreadLocal<>();
@@ -46,7 +47,14 @@ public class StepListener implements QAFTestStepListener {
 
     @Override
     public void beforExecute(StepExecutionTracker stepExecutionTracker) {
+//        System.out.println("=== step ====>" + stepExecutionTracker.getType());
+//        System.out.println("=== getDescription ====>" + step.getDescription());
+
+//        step.setDescription(stepExecutionTracker.getStep().getDescription() + " ABC");
         if (stepExecutionTracker.getType().startsWith("Step") || stepExecutionTracker.getType().startsWith("Result") || stepExecutionTracker.getType().startsWith("And") || stepExecutionTracker.getType().startsWith("*") || stepExecutionTracker.getType().startsWith("Given") || stepExecutionTracker.getType().startsWith("When") || stepExecutionTracker.getType().startsWith("Then")|| stepExecutionTracker.getType().startsWith("But")) {
+//            System.out.println("=== getDescription ====>" + stepExecutionTracker.getStep().getDescription());
+            //            step.setDescription(stepExecutionTracker.getStep().getDescription().replaceAll("\\$\\{env.url}","https://www.google.com"));
+//            stepExecutionTracker.getStep().setDescription(stepExecutionTracker.getStep().getDescription().replaceAll("\\$\\{env.url}","https://www.google.com"));
             String stepDescription = StringManipulation.cleanBDDActions(stepExecutionTracker.getStep().getDescription());
             threadedExtentTestNodes.get().add(ExtentReportManager.getTest().createNode(stepDescription));
             threadedExecutedTestSteps.get().add(stepExecutionTracker);
