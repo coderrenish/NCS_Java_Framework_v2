@@ -4,8 +4,12 @@ import com.ahq.globals.Utils;
 import com.ahq.internal.ExtentReportManager;
 import com.ahq.internal.StringManipulation;
 import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
+import com.qmetry.qaf.automation.core.QAFTestBase;
+import com.qmetry.qaf.automation.core.TestBaseProvider;
 import com.qmetry.qaf.automation.step.TestStep;
 import com.qmetry.qaf.automation.step.client.Scenario;
 import com.qmetry.qaf.automation.ui.WebDriverTestBase;
@@ -22,6 +26,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.qmetry.qaf.automation.core.ConfigurationManager.getBundle;
 
@@ -88,8 +94,10 @@ import static com.qmetry.qaf.automation.core.ConfigurationManager.getBundle;
             if (ExtentReportManager.getTest() != null) {
                 logReportSteps();
                 ExtentReportManager.getTest().fail(MarkupHelper.createLabel("Test Failed", ExtentColor.RED));
-                QAFWebDriver driver = new WebDriverTestBase().getDriver();
-                ExtentReportManager.getTest().addScreenCaptureFromBase64String(driver.getScreenshotAs(OutputType.BASE64));
+                if (hasScreenshotInMem()) {
+                    QAFWebDriver driver = new WebDriverTestBase().getDriver();
+                    ExtentReportManager.getTest().addScreenCaptureFromBase64String(driver.getScreenshotAs(OutputType.BASE64));
+                }
                 logTestCategories();
             }
         }
@@ -104,8 +112,10 @@ import static com.qmetry.qaf.automation.core.ConfigurationManager.getBundle;
                 } else {
                     ExtentReportManager.getTest().skip(MarkupHelper.createLabel("Test Skipped", ExtentColor.ORANGE));
                 }
-                QAFWebDriver driver = new WebDriverTestBase().getDriver();
-                ExtentReportManager.getTest().addScreenCaptureFromBase64String(driver.getScreenshotAs(OutputType.BASE64));
+                if (hasScreenshotInMem()) {
+                    QAFWebDriver driver = new WebDriverTestBase().getDriver();
+                    ExtentReportManager.getTest().addScreenCaptureFromBase64String(driver.getScreenshotAs(OutputType.BASE64));
+                }
                 logTestCategories();
             }
         }
@@ -211,5 +221,15 @@ import static com.qmetry.qaf.automation.core.ConfigurationManager.getBundle;
                 }
             }
             threadedTestCategories.get().clear();
+        }
+
+        private Boolean hasScreenshotInMem() {
+            QAFTestBase testBase = TestBaseProvider.instance().get();
+            String assertLog = testBase.getAssertionsLog();
+            String pattern = "/img/\\w+\\.png";
+            Pattern regexPattern = Pattern.compile(pattern);
+            Matcher matcher = regexPattern.matcher(assertLog);
+//        boolean hasScreenshot = matcher.find();
+            return matcher.find();
         }
     }

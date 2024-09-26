@@ -13,9 +13,13 @@ import com.qmetry.qaf.automation.core.TestBaseProvider;
 import com.qmetry.qaf.automation.step.QAFTestStepListener;
 import com.qmetry.qaf.automation.step.StepExecutionTracker;
 import com.qmetry.qaf.automation.step.TestStep;
+import com.qmetry.qaf.automation.testng.report.Report;
 import com.qmetry.qaf.automation.ui.WebDriverTestBase;
 import com.qmetry.qaf.automation.ui.webdriver.QAFWebDriver;
+import com.qmetry.qaf.automation.util.ReportUtils;
+import com.qmetry.qaf.automation.util.Validator;
 import org.openqa.selenium.OutputType;
+import org.testng.Reporter;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -35,6 +39,11 @@ public class StepListener implements QAFTestStepListener {
             "I get attribute {attribute_name} value from {locator}",
             "I wait until element/field {0} is present");
 
+    private static final List<String> includedFiles = List.of(
+            "BrowserGlobal.java",
+            "ApiGlobal.java",
+            "D365CRM.java");
+
     private Boolean excludedStepsStartsWith(String step) {
         return step.startsWith("I wait") || step.startsWith("I switch") || step.startsWith("I scroll");
     }
@@ -47,14 +56,7 @@ public class StepListener implements QAFTestStepListener {
 
     @Override
     public void beforExecute(StepExecutionTracker stepExecutionTracker) {
-//        System.out.println("=== step ====>" + stepExecutionTracker.getType());
-//        System.out.println("=== getDescription ====>" + step.getDescription());
-
-//        step.setDescription(stepExecutionTracker.getStep().getDescription() + " ABC");
         if (stepExecutionTracker.getType().startsWith("Step") || stepExecutionTracker.getType().startsWith("Result") || stepExecutionTracker.getType().startsWith("And") || stepExecutionTracker.getType().startsWith("*") || stepExecutionTracker.getType().startsWith("Given") || stepExecutionTracker.getType().startsWith("When") || stepExecutionTracker.getType().startsWith("Then")|| stepExecutionTracker.getType().startsWith("But")) {
-//            System.out.println("=== getDescription ====>" + stepExecutionTracker.getStep().getDescription());
-            //            step.setDescription(stepExecutionTracker.getStep().getDescription().replaceAll("\\$\\{env.url}","https://www.google.com"));
-//            stepExecutionTracker.getStep().setDescription(stepExecutionTracker.getStep().getDescription().replaceAll("\\$\\{env.url}","https://www.google.com"));
             String stepDescription = StringManipulation.cleanBDDActions(stepExecutionTracker.getStep().getDescription());
             threadedExtentTestNodes.get().add(ExtentReportManager.getTest().createNode(stepDescription));
             threadedExecutedTestSteps.get().add(stepExecutionTracker);
@@ -63,36 +65,43 @@ public class StepListener implements QAFTestStepListener {
 
     @Override
     public void afterExecute(StepExecutionTracker stepExecutionTracker) {
-        if ((stepExecutionTracker.getStep().getFileName().equalsIgnoreCase("BrowserGlobal.java") || stepExecutionTracker.getStep().getFileName().equalsIgnoreCase("D365CRM.java")) && !excludedStepsStartsWith(stepExecutionTracker.getStep().getDescription()) && !excludedSteps.contains(stepExecutionTracker.getStep().getDescription())) {
+        if (includedFiles.contains(stepExecutionTracker.getStep().getFileName()) && !excludedStepsStartsWith(stepExecutionTracker.getStep().getDescription()) && !excludedSteps.contains(stepExecutionTracker.getStep().getDescription())){
             String augmentedStepDescription = formatStepDescriptionWithArgs(stepExecutionTracker.getStep());
-            QAFTestBase testBase = TestBaseProvider.instance().get();
-            String assertLog = testBase.getAssertionsLog();
-            String pattern = "/img/\\w+\\.png";
-            Pattern regexPattern = Pattern.compile(pattern);
-            Matcher matcher = regexPattern.matcher(assertLog);
-            boolean hasScreenshot = matcher.find();
+            boolean hasScreenshot = hasScreenshotInMem();
             // Assertion failures or major breakages will throw an exception
             boolean failedWithAssertionOrException = stepExecutionTracker.hasException();
             // All verification steps should return a boolean result. No other known way to determine if a verification step has failed.
             // Not sure how to retrieve the actual result of the verification step, only the expected result.
             boolean failedWithFalseVerification = stepExecutionTracker.getResult() != null && stepExecutionTracker.getResult().equals(false);
             boolean hasStepFailed = failedWithAssertionOrException || failedWithFalseVerification || augmentedStepDescription.contains("I fail step with info");
-            QAFWebDriver driver = new WebDriverTestBase().getDriver();
             if (getBundle().getPropertyValue("exec.email.report.fail").equalsIgnoreCase("OFF")) {
 //                System.out.println("========STEP FAIL IGNORED============>");
             } else if (hasStepFailed) {
                 if (stepExecutionTracker.hasException()) {
                     Throwable throwable = stepExecutionTracker.getException();
-                    threadedExtentTestNodes.get().get(threadedExtentTestNodes.get().size() - 1).log(Status.FAIL, throwable, MediaEntityBuilder.createScreenCaptureFromBase64String(driver.getScreenshotAs(OutputType.BASE64)).build());
+                    if (hasScreenshot) {
+                        QAFWebDriver driver = new WebDriverTestBase().getDriver();
+                        threadedExtentTestNodes.get().get(threadedExtentTestNodes.get().size() - 1).log(Status.FAIL, throwable, MediaEntityBuilder.createScreenCaptureFromBase64String(driver.getScreenshotAs(OutputType.BASE64)).build());
+                    } else {
+                        threadedExtentTestNodes.get().get(threadedExtentTestNodes.get().size() - 1).log(Status.FAIL, throwable);
+                    }
                 } else {
-                    threadedExtentTestNodes.get().get(threadedExtentTestNodes.get().size() - 1).log(Status.FAIL, augmentedStepDescription, MediaEntityBuilder.createScreenCaptureFromBase64String(driver.getScreenshotAs(OutputType.BASE64)).build());
+                    if (hasScreenshot) {
+                        QAFWebDriver driver = new WebDriverTestBase().getDriver();
+                        threadedExtentTestNodes.get().get(threadedExtentTestNodes.get().size() - 1).log(Status.FAIL, augmentedStepDescription, MediaEntityBuilder.createScreenCaptureFromBase64String(driver.getScreenshotAs(OutputType.BASE64)).build());
+                    } else {
+                        System.out.println("========STEP FAIL NO Exception ============>");
+                        threadedExtentTestNodes.get().get(threadedExtentTestNodes.get().size() - 1).log(Status.FAIL, augmentedStepDescription);
+                    }
                 }
             } else {
+
                 if (augmentedStepDescription.contains("didn't load all fields properly on first attempt")) {
                     // Separately handle this step to notify of a known attachment issue caused a retry
                     threadedExtentTestNodes.get().get(threadedExtentTestNodes.get().size() - 1).log(Status.INFO, MarkupHelper.createLabel(augmentedStepDescription, ExtentColor.BLUE));
                 } else {
                     if (hasScreenshot) {
+                        QAFWebDriver driver = new WebDriverTestBase().getDriver();
                         threadedExtentTestNodes.get().get(threadedExtentTestNodes.get().size() - 1).log(Status.PASS, augmentedStepDescription, MediaEntityBuilder.createScreenCaptureFromBase64String(driver.getScreenshotAs(OutputType.BASE64)).build());
                     } else {
                         threadedExtentTestNodes.get().get(threadedExtentTestNodes.get().size() - 1).log(Status.PASS, augmentedStepDescription);
@@ -129,6 +138,20 @@ public class StepListener implements QAFTestStepListener {
         String element = splitString[3];
         return element + " (" + elementType + ")";
     }
+
+
+    private Boolean hasScreenshotInMem() {
+        QAFTestBase testBase = TestBaseProvider.instance().get();
+        String assertLog = testBase.getAssertionsLog();
+        String pattern = "/img/\\w+\\.png";
+        Pattern regexPattern = Pattern.compile(pattern);
+        Matcher matcher = regexPattern.matcher(assertLog);
+//        boolean hasScreenshot = matcher.find();
+        return matcher.find();
+    }
+
+
+
 }
 
 
