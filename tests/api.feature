@@ -6,7 +6,9 @@ Feature: API Test
     @REGRESSION
   Scenario: Testing api
     Given I request api "api.reqResIn.get.getUsers"
-    Then I assert api response status is "200"
+    Given 
+    Then I assert api response status is "OK"
+    And I request api "dfd" with data "{string}"
 #  Step: I request api "api.reqResIn.get.getUsers"
 #  Step: I request api "api.reqResIn.get.getUsers" with data "{'name':'Renish','address':'23,Sample address, Brisbane, QLD'}"
 #  Result: I assert api response status code is "200"
