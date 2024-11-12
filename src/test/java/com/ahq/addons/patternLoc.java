@@ -2,12 +2,10 @@ package com.ahq.addons;
 
 import com.ahq.globals.BrowserGlobal;
 import org.apache.commons.text.CaseUtils;
-
 import java.util.Arrays;
 
 import static com.qmetry.qaf.automation.core.ConfigurationManager.getBundle;
 
-// fieldType [“input”, “link”, “text”, “radio_button”, “checkbox”, “select”, “button”, "tab" - Should match with last part of pattern entry Eg: loc.XXXX.pattern.radio_button]
 public class patternLoc {
     //    private static String patternCode = getBundle().getPropertyValue("loc.pattern.code");
     private static String varPageName;
@@ -18,30 +16,28 @@ public class patternLoc {
     private static String varFieldType;
     private static String varLocName;
     private static String varLocValue;
-
     private static Boolean varFieldInstFlag;
     private static String lastLocPrintVal = "";
-
     private static String varPatternCode = getPatternCode().trim();
 
 
     /**
-     * @param fieldType [Type of the locator - link,input,select,button,switchButton,checkbox,radioButton]
-     * @param pageName [Page name in which field is located]
-     * @param fieldName [Field Name]
-     *
+     * @param fieldType   [Type of the locator - link,input,select,button,switchButton,checkbox,radioButton]
+     * @param pageName    [Page name in which field is located]
+     * @param fieldName   [Field Name]
+     * @param fieldValue  [Field fieldValue]
+     * @param ignoreLabel [Field ignoreLabel]
      **/
-    public static String getLocator(String pageName, String fieldType, String fieldName, String fieldValue, Boolean ignoreLabel) throws Exception{
+    public static String getLocator(String pageName, String fieldType, String fieldName, String fieldValue, Boolean ignoreLabel) throws Exception {
         String loc = "";
-        switch(fieldType.toUpperCase().trim()){
+        switch (fieldType.toUpperCase().trim()) {
             case "INPUT":
-                return input(pageName,fieldName);
-
+                return input(pageName, fieldName);
             default:
                 return "";
         }
-
     }
+
 
     /**
      * @param page [Page of the locator]
@@ -57,6 +53,8 @@ public class patternLoc {
         }
         return locator;
     }
+
+
     /**
      * @param page [Page of the locator]
      * @param fieldName [Field Name: Eg: First Name - Note for Radio button use ":" tell the value Eg: Choose Payment Type:Cash]
@@ -73,6 +71,7 @@ public class patternLoc {
         }
         return locator;
     }
+
 
     /**
      * @param page [Page of the locator]
@@ -360,7 +359,7 @@ public class patternLoc {
 //        String projCode = getBundle().getPropertyValue("project.code");
         varFieldInstFlag = false;
         varPageName = pageNameCheck(argPageName).trim();
-        varFieldLoc = fieldLocationCheck(argPageName).trim();
+        varFieldLoc = fieldLocationCheck(argFieldName).trim();
         varFieldName = fieldNameCheck(argFieldName).trim();
         varFieldInst = fieldInstanceCheck(argFieldName).trim();
         varFieldSec = fieldSectionCheck(argFieldName).trim();
@@ -437,7 +436,6 @@ public class patternLoc {
 //                    varLocValue = varLocValue.replaceAll("xpath=",getLocatorLocVal.replaceAll("\"",""));
                 }
             }
-
             if (varFieldInstFlag){
                 varLocValue = findAndReplaceXpath(varLocValue,"XPATH=(",")["+varFieldInst+"]");
             }
@@ -516,9 +514,10 @@ public class patternLoc {
             return "";
         }
     }
-    private static String fieldLocationCheck(String argPageName){
-        if (argPageName.contains("::")) {
-            String[] fldLocSplit = argPageName.trim().split("::");
+    private static String fieldLocationCheck(String argFieldName){
+        if (argFieldName.contains("::")) {
+            String[] fldLocSplit = argFieldName.trim().split("::");
+            System.out.println("=====>[LOCATION CHECK - Value] =>" + fldLocSplit[1].trim());
             return fldLocSplit[1].trim();
         } else {
             return "";
