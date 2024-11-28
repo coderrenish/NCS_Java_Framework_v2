@@ -330,6 +330,16 @@ public class web {
         getBundle().setProperty("auto.page.name",pageName);
     }
 
+
+    /**
+     * Getting execution time from variable - var.exec.dateTime
+     */
+    @QAFTestStep(description = "Web: Get-Page-Name")
+    @And("Web: Get-Page-Name")
+    public static String getPageName_Web() throws Exception {
+        return getPageName();
+    }
+
     /**
      * @param locationName [Set Location name of the field within Page]
      */
@@ -337,12 +347,15 @@ public class web {
     @And("Web: Set-Field-Location Value:{string}")
     public static void setFieldLocation_Web(String locationName) throws Exception {
         String pageName = getBundle().getPropertyValue("auto.page.name");
+        System.out.println("=========> setFieldLocation_Web - BEFORE==> " +  pageName );
         if (pageName.contains("::")) {
-            String[] fldNameSplit = pageName.trim().split("::");
-            getBundle().setProperty("auto.page.name", fldNameSplit[0].trim()+"::"+locationName.trim());
+            String[] pageNameSplit = pageName.trim().split("::");
+            getBundle().setProperty("auto.page.name", pageNameSplit[0].trim()+"::"+locationName.trim());
         } else {
             getBundle().setProperty("auto.page.name",pageName+"::"+locationName.trim());
         }
+        pageName = getBundle().getPropertyValue("auto.page.name");
+        System.out.println("=========> setFieldLocation_Web - AFTER==> " +  pageName );
     }
 
     /**
@@ -440,50 +453,63 @@ public class web {
 //    Web: Verify Page-Contains-Text Value:{0} Page-Name:{1}
 //    Web: Verify Page-Header-Text Field:{0} Page-Name:{1}
 //    Web: Verify Page-Sub-Header-Text Field:{0} Page-Name:{1}
+//    /**
+//     * @param header_text [Header text to be verified]
+//     */
+//    @QAFTestStep(description = "Web: Verify-Page-Header-Text Field:{0}")
+//    @And("Web: Verify Page-Header-Text Field:{string}")
+//    public static void verifyPageHeaderText_Web(String header_text) throws Exception {
+//        BrowserGlobal.iAssertElementText(waitFieldToBePresentScrollAndEnabled(patternLoc.header(getPageName(),header_text)),header_text);
+//    }
+
     /**
      * @param header_text [Header text to be verified]
+     * @param page_name [Page Name to be set]
      */
-    @QAFTestStep(description = "Web: Verify-Page-Header-Text Field:{0}")
-    @And("Web: Verify Page-Header-Text Field:{string}")
-    public static void verifyPageHeaderText_Web(String header_text) throws Exception {
-        BrowserGlobal.iAssertElementText(waitFieldToBePresentScrollAndEnabled(patternLoc.header(getPageName(),header_text)),header_text);
+    @QAFTestStep(description = "Web: Verify-Page-Header-Text Field:{0} Page-Name:{1}")
+    @And("Web: Verify-Page-Header-Text Field:{string} Page-Name:{string}")
+    public static void verifyPageHeader_Web(String header_text, String page_name) throws Exception {
+        BrowserGlobal.iWaitForPageToLoad();
+        web.setPageName_Web(page_name);
+        BrowserGlobal.iAssertElementText(waitFieldToBePresentScrollAndEnabled(patternLoc.header(getPageName(),header_text)),removeSecLocAndInst(header_text));
     }
 
     /**
      * @param header_text [Header text to be verified]
      * @param page_name [Page Name to be set]
      */
-    @QAFTestStep(description = "Web: Wait-And-Verify Page-Header-Text Field:{0} Page-Name:{1}")
-    @And("Web: Wait-And-Verify Page-Header-Text Field:{string} Page-Name:{string}")
-    public static void waitAndVerifyPageHeaderTextWithPageName_Web(String header_text, String page_name) throws Exception {
+    @QAFTestStep(description = "Web: Verify-Page-Header-Text-Contains Text:{0} Page-Name:{1}")
+    @And("Web: Verify-Page-Header-Text-Contains Text:{string} Page-Name:{string}")
+    public static void verifyPageHeaderTextContains_Web(String header_text, String page_name) throws Exception {
         BrowserGlobal.iWaitForPageToLoad();
         web.setPageName_Web(page_name);
-        BrowserGlobal.iAssertElementText(waitFieldToBePresentScrollAndEnabled(patternLoc.header(getPageName(),header_text)),header_text);
+        BrowserGlobal.iAssertLocatorPartialText(waitFieldToBePresentScrollAndEnabled(patternLoc.header(getPageName(),header_text)),removeSecLocAndInst(header_text));
+//        BrowserGlobal.iAssertElementText(waitFieldToBePresentScrollAndEnabled(patternLoc.header(getPageName(),header_text)),header_text);
     }
 
     /**
      * @param title_text [Title text to be verified]
      * @param page_name [Page Name to be set]
      */
-    @QAFTestStep(description = "Web: Wait-And-Verify Page-Title-Text Title:{0} Page-Name:{1}")
-    @And("Web: Wait-And-Verify Page-Title-Text Title:{string} Page-Name:{string}")
-    public static void waitAndVerifyPageTitleTextWithPageName_Web(String title_text, String page_name) throws Exception {
+    @QAFTestStep(description = "Web: Verify-Page-Title-Text Title:{0} Page-Name:{1}")
+    @And("Web: Verify-Page-Title-Text Title:{string} Page-Name:{string}")
+    public static void verifyPageTitle_Web(String title_text, String page_name) throws Exception {
         BrowserGlobal.iWaitForPageToLoad();
         web.setPageName_Web(page_name);
         BrowserGlobal.iWaitForPageToLoad();
         BrowserGlobal.iAssertTitlePartialText(title_text);
     }
 
-    /**
-     * @param title_text [Page Title of the page]
-     */
-    @QAFTestStep(description = "Web: Verify page title {0}")
-    @And("Web: Verify page title {string}")
-    public static void verifyPageTitle_Web(String title_text) throws Exception {
-        BrowserGlobal.iWaitForPageToLoad();
-        getBundle().setProperty("auto.page.name",getPageName());
-        BrowserGlobal.iAssertTitleText(title_text);
-    }
+//    /**
+//     * @param title_text [Page Title of the page]
+//     */
+//    @QAFTestStep(description = "Web: Verify page title {0}")
+//    @And("Web: Verify page title {string}")
+//    public static void verifyPageTitle_Web(String title_text) throws Exception {
+//        BrowserGlobal.iWaitForPageToLoad();
+//        getBundle().setProperty("auto.page.name",getPageName());
+//        BrowserGlobal.iAssertTitleText(title_text);
+//    }
 
 
 
@@ -509,6 +535,16 @@ public class web {
     }
 
     /**
+     * @param field_input [Input field name to fill]
+     */
+    @QAFTestStep(description = "Web: Click-Checkbox Field:{0}")
+    @And("Web: Click-Checkbox Field::{string}")
+    public static void clickCheckbox_Web(String field_input) throws Exception {
+        BrowserGlobal.iClickOn(waitFieldToBePresentScrollAndEnabled(patternLoc.checkbox(getPageName(),field_input)));
+
+    }
+
+    /**
      * @param input_value [Input value to fill]
      * @param field_input [Input field name to fill]
      */
@@ -518,15 +554,46 @@ public class web {
         BrowserGlobal.iFillInTo(input_value,waitFieldToBePresentScrollAndEnabled(patternLoc.input(getPageName(),field_input)));
     }
 
+    /**
+     * @param input_value [Input value to fill]
+     * @param field_input [Input field name to fill]
+     */
+    @QAFTestStep(description = "Web: Click-And-Input-Text Value:{0} Field:{1}")
+    @And("Web: Click-And-Input-Text Value:{string} Field:{string}")
+    public static void clickAndInputText_Web(String input_value, String field_input) throws Exception {
+        BrowserGlobal.iClickOn(waitFieldToBePresentScrollAndEnabled(patternLoc.input(getPageName(),field_input)));
+        BrowserGlobal.iWaitForMilliseconds("500");
+        BrowserGlobal.iFillInTo(input_value,waitFieldToBePresentScrollAndEnabled(patternLoc.input(getPageName(),field_input)));
+    }
+
+
 //    Web: Input-Text-With-Placeholder Value:{0} Field:{1}
     /**
      * @param input_value [Input value to fill]
      * @param field_input [Input field name to fill]
      */
     @QAFTestStep(description = "Web: Input-Text-With-Placeholder-Or-No-Label Value:{0} Field:{1}")
-    @And("Web: Input-Text-With-Placeholder Value:{string} Field:{string}")
+    @And("Web: Input-Text-With-Placeholder-Or-No-Label Value:{string} Field:{string}")
     public static void inputTextWithPlaceholderOrNoLabel_Web(String input_value, String field_input) throws Exception {
         BrowserGlobal.iFillInTo(input_value,waitFieldToBePresentScrollAndEnabled(patternLoc.input(getPageName(),field_input,false)));
+    }
+
+    /**
+     * @param field_button_name [Button name to Mouseover]
+     */
+    @QAFTestStep(description = "Web: Mouseover-On-Button Field:{0}")
+    @And("Web: Mouseover-On-Button Field:{string}")
+    public static void mouseoverOnButton_Web(String field_button_name) throws Exception {
+        BrowserGlobal.iMouseoverOn(waitFieldToBePresentScrollAndEnabled(patternLoc.button(getPageName(),field_button_name)));
+    }
+
+    /**
+     * @param field_button_name [Button name to Mouseover]
+     */
+    @QAFTestStep(description = "Web: Mouseover-On-Link Field:{0}")
+    @And("Web: Mouseover-On-Link Field:{string}")
+    public static void mouseoverOnLink_Web(String field_button_name) throws Exception {
+        BrowserGlobal.iMouseoverOn(waitFieldToBePresentScrollAndEnabled(patternLoc.link(getPageName(),field_button_name)));
     }
 
 
@@ -540,11 +607,32 @@ public class web {
 //        BrowserGlobal.iWaitUntilElementEnabled(locName);
 //        return locName;
 //    }
-    private static String waitFieldToBePresentScrollAndEnabled(String locName) throws Exception {
+    public static String waitFieldToBePresentScrollAndEnabled(String locName) throws Exception {
         BrowserGlobal.iWaitUntilElementPresent(locName);
         BrowserGlobal.iScrollToAnElement(locName);
         BrowserGlobal.iWaitUntilElementEnabled(locName);
         return locName;
+    }
+
+    // To Remove Section Location and Instance from a field
+    private static String removeSecLocAndInst(String entry) throws Exception {
+
+        if (entry != null && entry.startsWith("[")  && entry.contains("]")) {
+            int firstBracketStart = entry.indexOf("[");
+            int firstBracketEnd = entry.indexOf("]");
+            if (firstBracketStart != -1 && firstBracketEnd != -1 && firstBracketStart < firstBracketEnd) {
+                entry = entry.substring(0, firstBracketStart) + entry.substring(firstBracketEnd + 1);
+            }
+        }
+
+        // Step 2: Remove the last part after the last "::"
+        if (entry != null && entry.contains("::")) {
+            int lastColonIndex = entry.lastIndexOf("::");
+            if (lastColonIndex != -1) {
+                entry = entry.substring(0, lastColonIndex).trim();
+            }
+        }
+        return entry;
     }
 }
 
