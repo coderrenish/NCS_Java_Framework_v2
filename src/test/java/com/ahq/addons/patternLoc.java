@@ -343,6 +343,7 @@ public class patternLoc {
         if (locLabelPatternVal.equals(locLabelPatternName) || locLabelPatternVal.length() < 5) {
             System.out.println("=====>[ERROR] => [Locator Pattern '"+ locLabelPatternName + "' not available]");
         } else {
+            locLabelPatternVal = findAndAddLocation(locLabelPatternVal);
             String locLabelValue = "{\"locator\":"+locLabelPatternVal+",\"desc\":\""+fieldNameCheck(varFieldName)+" : [LABEL] Field \"}";
             getBundle().setProperty("loc.auto.label",locLabelValue);
             try {
@@ -352,7 +353,6 @@ public class patternLoc {
                 logAutoLocatorEntry("label");
             } catch (Exception e) {
                 System.out.println("\033[1;31m" + "=====>[ERROR] => [Extract \"For\" value failed]" + "\033[0m");
-
             }
         }
     }
@@ -426,18 +426,20 @@ public class patternLoc {
 //                    varLocValue = varLocValue.replaceAll("xpath=",getLocatorSecVal.replaceAll("\"",""));
                 }
             }
-            if (!varFieldLoc.isEmpty()) {
-                String getLocatorLocName = varPatternCode+".pattern.location."+genCamelCase(varFieldLoc);
-                String getLocatorLocVal = getBundle().getPropertyValue(getLocatorLocName.trim());
-                System.out.println("=====>[getLocatorLocName] : "+getLocatorLocName);
-                System.out.println("=====>[getLocatorLocVal] : "+getLocatorLocVal);
-                if (getLocatorLocVal.equals(getLocatorLocName) || getLocatorLocVal.length() < 5) {
-                    System.out.println("=====>[ERROR] => [Locator Location Pattern '"+ getLocatorLocName + "' not available]");
-                } else {
-                    varLocValue = findAndReplaceXpath(varLocValue,getLocatorLocVal,(varFieldInstFlag) ? varFieldInst : "1");
-//                    varLocValue = varLocValue.replaceAll("xpath=",getLocatorLocVal.replaceAll("\"",""));
-                }
-            }
+            varLocValue = findAndAddLocation(varLocValue);
+//            if (!varFieldLoc.isEmpty()) {
+//                String locationName = varPatternCode+".pattern.location."+genCamelCase(varFieldLoc);
+//                String locationVal = getBundle().getPropertyValue(locationName.trim());
+//                System.out.println("=====>[getLocatorLocName] : "+locationName);
+//                System.out.println("=====>[getLocatorLocVal] : "+locationVal);
+//                if (locationVal.equals(locationName) || locationVal.length() < 5) {
+//                    System.out.println("=====>[ERROR] => [Locator Location Pattern '"+ locationName + "' not available]");
+//                } else {
+//                    varLocValue = findAndReplaceXpath(varLocValue,locationVal,(varFieldInstFlag) ? varFieldInst : "1");
+////                    varLocValue = varLocValue.replaceAll("xpath=",getLocatorLocVal.replaceAll("\"",""));
+//                }
+//            }
+
 //            if (varFieldInstFlag){
 //                varLocValue = findAndReplaceXpath(varLocValue,"XPATH=(",")["+varFieldInst+"]");
 //            }
@@ -567,6 +569,23 @@ public class patternLoc {
         }
     }
 
+    private static String findAndAddLocation(String varLocValue){
+
+        if (!varFieldLoc.isEmpty()) {
+            System.out.println("=====>[BeforeLocation] : "+varLocValue);
+            String locationName = varPatternCode+".pattern.location."+genCamelCase(varFieldLoc);
+            String locationVal = getBundle().getPropertyValue(locationName.trim());
+            System.out.println("=====>[LocationName] : "+locationName);
+            System.out.println("=====>[LocationValue] : "+locationVal);
+            if (locationVal.equals(locationName) || locationVal.length() < 5) {
+                System.out.println("=====>[ERROR] => [Locator Location Pattern '"+ locationName + "' not available]");
+            } else {
+                varLocValue = findAndReplaceXpath(varLocValue,locationVal,(varFieldInstFlag) ? varFieldInst : "1");
+                System.out.println("=====>[FinalLocation] : "+varLocValue);
+            }
+        }
+        return varLocValue;
+    }
 
     private static String findAndReplaceXpath(String locEntries, String locationOrSectionEntry, String instanceEntry ){
         System.out.println("=========> locEntries=> " +  locEntries + "=========> leftEntry=> " +  locationOrSectionEntry + "=========> rightEntry=> " +  instanceEntry);
