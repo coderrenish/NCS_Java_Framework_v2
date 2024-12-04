@@ -343,8 +343,8 @@ public class web {
     /**
      * @param locationName [Set Location name of the field within Page]
      */
-    @QAFTestStep(description = "Web: Set-Field-Location Value:{0}")
-    @And("Web: Set-Field-Location Value:{string}")
+    @QAFTestStep(description = "Web: Set-Field-Location Name:{0}")
+    @And("Web: Set-Field-Location Name:{string}")
     public static void setFieldLocation_Web(String locationName) throws Exception {
         String pageName = getBundle().getPropertyValue("auto.page.name");
         System.out.println("=========> setFieldLocation_Web - BEFORE==> " +  pageName );
@@ -353,6 +353,24 @@ public class web {
             getBundle().setProperty("auto.page.name", pageNameSplit[0].trim()+"::"+locationName.trim());
         } else {
             getBundle().setProperty("auto.page.name",pageName+"::"+locationName.trim());
+        }
+        pageName = getBundle().getPropertyValue("auto.page.name");
+        System.out.println("=========> setFieldLocation_Web - AFTER==> " +  pageName );
+    }
+
+    /**
+     * @param locationName [Set Location name of the field within Page]
+     */
+    @QAFTestStep(description = "Web: Set-Field-Location-And-Value Name:{0} Value:{1}")
+    @And("Web: Set-Field-Location-And-Value Name:{string} Value:{string}")
+    public static void setFieldLocationAndValue_Web(String locationName,String locationValue) throws Exception {
+        String pageName = getBundle().getPropertyValue("auto.page.name");
+        System.out.println("=========> setFieldLocation_Web - BEFORE==> " +  pageName );
+        if (pageName.contains("::")) {
+            String[] pageNameSplit = pageName.trim().split("::");
+            getBundle().setProperty("auto.page.name", pageNameSplit[0].trim()+"::"+locationName.trim()+"::"+locationValue.trim());
+        } else {
+            getBundle().setProperty("auto.page.name",pageName+"::"+locationName.trim()+"::"+locationValue.trim());
         }
         pageName = getBundle().getPropertyValue("auto.page.name");
         System.out.println("=========> setFieldLocation_Web - AFTER==> " +  pageName );
@@ -468,7 +486,7 @@ public class web {
      */
     @QAFTestStep(description = "Web: Verify-Page-Header-Text Field:{0} Page-Name:{1}")
     @And("Web: Verify-Page-Header-Text Field:{string} Page-Name:{string}")
-    public static void verifyPageHeader_Web(String header_text, String page_name) throws Exception {
+    public static void verifyPageHeaderText_Web(String header_text, String page_name) throws Exception {
         BrowserGlobal.iWaitForPageToLoad();
         web.setPageName_Web(page_name);
         BrowserGlobal.iAssertElementText(waitFieldToBePresentScrollAndEnabled(patternLoc.header(getPageName(),header_text)),removeSecLocAndInst(header_text));
@@ -485,6 +503,30 @@ public class web {
         web.setPageName_Web(page_name);
         BrowserGlobal.iAssertLocatorPartialText(waitFieldToBePresentScrollAndEnabled(patternLoc.header(getPageName(),header_text)),removeSecLocAndInst(header_text));
 //        BrowserGlobal.iAssertElementText(waitFieldToBePresentScrollAndEnabled(patternLoc.header(getPageName(),header_text)),header_text);
+    }
+
+    /**
+     * @param field [Header Field to be verified]
+     * @param page_name [Page Name to be set]
+     */
+    @QAFTestStep(description = "Web: Verify-Page-Header Field:{0} Page-Name:{1}")
+    @And("Web: Verify-Page-Header Field:{string} Page-Name:{string}")
+    public static void verifyPageHeaderField_Web(String field, String page_name) throws Exception {
+        BrowserGlobal.iWaitForPageToLoad();
+        web.setPageName_Web(page_name);
+        BrowserGlobal.iAssertElementPresent(waitFieldToBePresentScrollAndEnabled(patternLoc.header(getPageName(),field)));
+    }
+
+    /**
+     * @param header_text [Header text to be verified]
+     * @param page_name [Page Name to be set]
+     */
+    @QAFTestStep(description = "Web: Verify-Page-Header-Field-Text-Contains Field:{0} Text:{1} Page-Name:{2}")
+    @And("Web: Verify-Page-Header-Field-Text-Contains Field:{string} Text:{string} Page-Name:{string}")
+    public static void verifyPageHeaderFieldTextContains_Web(String field, String header_text, String page_name) throws Exception {
+        BrowserGlobal.iWaitForPageToLoad();
+        web.setPageName_Web(page_name);
+        BrowserGlobal.iAssertLocatorPartialText(waitFieldToBePresentScrollAndEnabled(patternLoc.header(getPageName(),field)),removeSecLocAndInst(header_text));
     }
 
     /**

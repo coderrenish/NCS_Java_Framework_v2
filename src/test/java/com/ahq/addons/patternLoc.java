@@ -384,6 +384,7 @@ public class patternLoc {
         getBundle().setProperty("loc.auto.fieldSection",varFieldSec);
         getBundle().setProperty("loc.auto.forValue","");
         getBundle().setProperty("loc.auto.fieldValue","");
+        getBundle().setProperty("loc.auto.fieldLocationValue",fieldLocationValueCheck(argPageName));
 
         String patternCode = getPatternCode();
         if (!varFieldLoc.isEmpty()) {
@@ -527,6 +528,17 @@ public class patternLoc {
             return "";
         }
     }
+    private static String fieldLocationValueCheck(String argPageName){
+        int count = argPageName.split("::", -1).length - 1;
+        if (count>1) {
+            String[] fldLocSplit = argPageName.trim().split("::");
+            System.out.println("=====>[LOCATION VALUE CHECK - Value] =>" + fldLocSplit[2].trim());
+            return fldLocSplit[2].trim();
+        } else {
+            System.out.println("=====>[LOCATION VALUE CHECK - Value] => is EMPTY : " + count + " - " + argPageName);
+            return "";
+        }
+    }
 
     private static String pageNameCheck(String argPage){
         if (argPage.contains("::")) {
@@ -572,7 +584,6 @@ public class patternLoc {
     private static String findAndAddLocation(String varLocValue){
 
         if (!varFieldLoc.isEmpty()) {
-            System.out.println("=====>[BeforeLocation] : "+varLocValue);
             String locationName = varPatternCode+".pattern.location."+genCamelCase(varFieldLoc);
             String locationVal = getBundle().getPropertyValue(locationName.trim());
             System.out.println("=====>[LocationName] : "+locationName);
