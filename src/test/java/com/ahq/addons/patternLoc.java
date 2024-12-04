@@ -82,6 +82,7 @@ public class patternLoc {
         String fieldType = "checkbox";
         String locator = checkLoc(page, fieldType, fieldName);
         if (locator.contains("auto.")) {
+            setForValue();
             generateLoc();
         }
         return locator;
@@ -273,6 +274,7 @@ public class patternLoc {
      * @param fieldName [Field Name: Eg: First Name - Note for Radio button use ":" tell the value Eg: Choose Payment Type:Cash]
      **/
     public static String header(String page, String fieldName) throws Exception{
+       System.out.println("=========> HEADER INSIDE==> " +  page + " == " +  fieldName + " == ");
         String fieldType = "header";
         String locator = checkLoc(page, fieldType, fieldName);
         if (locator.contains("auto.")) {  generateLoc(); }
@@ -359,7 +361,7 @@ public class patternLoc {
 //        String projCode = getBundle().getPropertyValue("project.code");
         varFieldInstFlag = false;
         varPageName = pageNameCheck(argPageName).trim();
-        varFieldLoc = fieldLocationCheck(argFieldName).trim();
+        varFieldLoc = fieldLocationCheck(argPageName).trim();
         varFieldName = fieldNameCheck(argFieldName).trim();
         varFieldInst = fieldInstanceCheck(argFieldName).trim();
         varFieldSec = fieldSectionCheck(argFieldName).trim();
@@ -420,25 +422,25 @@ public class patternLoc {
                 if (getLocatorSecVal.equals(getLocatorSecName) || getLocatorSecVal.length() < 5) {
                     System.out.println("=====>[ERROR] => [Locator Section Pattern '"+ getLocatorSecName + "' not available]");
                 } else {
-                    varLocValue = findAndReplaceXpath(varLocValue,getLocatorSecVal,"");
+                    varLocValue = findAndReplaceXpath(varLocValue,getLocatorSecVal,(varFieldInstFlag) ? varFieldInst : "1");
 //                    varLocValue = varLocValue.replaceAll("xpath=",getLocatorSecVal.replaceAll("\"",""));
                 }
             }
             if (!varFieldLoc.isEmpty()) {
                 String getLocatorLocName = varPatternCode+".pattern.location."+genCamelCase(varFieldLoc);
                 String getLocatorLocVal = getBundle().getPropertyValue(getLocatorLocName.trim());
-//                System.out.println("=====>[getLocatorLocName] : "+getLocatorLocName);
-//                System.out.println("=====>[getLocatorLocVal] : "+getLocatorLocVal);
+                System.out.println("=====>[getLocatorLocName] : "+getLocatorLocName);
+                System.out.println("=====>[getLocatorLocVal] : "+getLocatorLocVal);
                 if (getLocatorLocVal.equals(getLocatorLocName) || getLocatorLocVal.length() < 5) {
                     System.out.println("=====>[ERROR] => [Locator Location Pattern '"+ getLocatorLocName + "' not available]");
                 } else {
-                    varLocValue = findAndReplaceXpath(varLocValue,getLocatorLocVal,"");
+                    varLocValue = findAndReplaceXpath(varLocValue,getLocatorLocVal,(varFieldInstFlag) ? varFieldInst : "1");
 //                    varLocValue = varLocValue.replaceAll("xpath=",getLocatorLocVal.replaceAll("\"",""));
                 }
             }
-            if (varFieldInstFlag){
-                varLocValue = findAndReplaceXpath(varLocValue,"XPATH=(",")["+varFieldInst+"]");
-            }
+//            if (varFieldInstFlag){
+//                varLocValue = findAndReplaceXpath(varLocValue,"XPATH=(",")["+varFieldInst+"]");
+//            }
             varLocValue = "{\"locator\":"+varLocValue+",\"desc\":\""+varFieldName + " : ["+varFieldType+"] Field \"}";
             getBundle().setProperty(varLocName,varLocValue);
             logAutoLocatorEntry("other");
@@ -514,9 +516,9 @@ public class patternLoc {
             return "";
         }
     }
-    private static String fieldLocationCheck(String argFieldName){
-        if (argFieldName.contains("::")) {
-            String[] fldLocSplit = argFieldName.trim().split("::");
+    private static String fieldLocationCheck(String argPageName){
+        if (argPageName.contains("::")) {
+            String[] fldLocSplit = argPageName.trim().split("::");
             System.out.println("=====>[LOCATION CHECK - Value] =>" + fldLocSplit[1].trim());
             return fldLocSplit[1].trim();
         } else {
@@ -566,31 +568,98 @@ public class patternLoc {
     }
 
 
-    private static String findAndReplaceXpath(String locEntries, String leftEntry, String rightEntry ){
+    private static String findAndReplaceXpath(String locEntries, String locationOrSectionEntry, String instanceEntry ){
+        System.out.println("=========> locEntries=> " +  locEntries + "=========> leftEntry=> " +  locationOrSectionEntry + "=========> rightEntry=> " +  instanceEntry);
         String replacedLocator = "[";
 
         if (locEntries.trim().startsWith("[") && locEntries.trim().endsWith("]")) {
-            leftEntry = leftEntry.replaceAll("\"","");
-            locEntries = locEntries.substring(1);
-            locEntries = locEntries.substring(0, locEntries.length() - 1);
-            String[] arrLoc = locEntries.split(",");
+//            leftEntry = leftEntry.replaceAll("\"","").trim();
+//            locEntries = locEntries.substring(1);
+//            locEntries = locEntries.substring(0, locEntries.length() - 1);
+            System.out.println("=========> locEntries - BEFORE==> " +  locEntries );
+//            locEntries = locEntries.substring(1).trim(); // Remove the first character - "["
+//            leftEntry = leftEntry.substring(0, leftEntry.length() - 1).trim(); // Remove the last character - "]"
+            locEntries = locEntries.replaceAll("\\s*,\\s*", ",").trim();
+            locEntries = locEntries.substring(1, locEntries.length() - 1).trim(); // Removing first and last [] square brackets
+            locEntries = locEntries.substring(1, locEntries.length() - 1).trim(); // Removing first and last double quotes\
+            System.out.println("=========> locEntries - AFTER==> " +  locEntries );
+            if (locationOrSectionEntry != null && locationOrSectionEntry.length() > 2) {
+                locationOrSectionEntry = locationOrSectionEntry.substring(1, locationOrSectionEntry.length() - 1); // Removing first and last double quotes
+                System.out.println("=========> leftEntry - AFTER==> " +  locationOrSectionEntry );
+            }
+            String[] arrLoc = locEntries.split("\",\"");
             int loopCount = 0;
             for (String loc: arrLoc) {
+                loc = loc.trim();
+                System.out.println("=========> loc - AFTER==> " +  loc);
                 loopCount++;
-                if (loc.contains("xpath=//")) {
-                    loc = loc.replace("xpath=",leftEntry);
-                    loc = loc.substring(0, loc.length() - 1).trim() + rightEntry + "\"";
-                    replacedLocator = (loopCount > 1) ? replacedLocator + "," + loc : replacedLocator + loc;
-                } else {
-                    replacedLocator = (loopCount > 1) ? replacedLocator + "," + loc : replacedLocator + loc;
+                if (loc.startsWith("xpath=//") && locationOrSectionEntry != null && instanceEntry != null && !instanceEntry.isEmpty()) { // Checking Location Entry and Instance Entry
+                    loc = loc.replace("xpath=",locationOrSectionEntry);
+                    loc = loc.replace("xpath=","xpath=(");
+                    loc =  "\"" + loc + ")[" + instanceEntry.trim() + "]\"";
+                }  else if (loc.startsWith("xpath=//") && locationOrSectionEntry != null) { // Checking Location Entry only
+                    loc = loc.replace("xpath=",locationOrSectionEntry);
+                    loc =  "\"" + loc + "\"";
+//                    loc = loc.substring(0, loc.length() - 1).trim() + rightEntry + "\"";
+//                    replacedLocator = (loopCount > 1) ? replacedLocator + "," + loc : replacedLocator + loc;
                 }
+//                else {
+//                    replacedLocator = (loopCount > 1) ? replacedLocator + "," + loc : replacedLocator + loc;
+//                }
+                replacedLocator = (loopCount > 1) ? replacedLocator + "," + loc : replacedLocator + loc;
             }
             replacedLocator = replacedLocator + "]";
         } else {
             replacedLocator = locEntries;
         }
+        System.out.println("=========> replacedLocator FINAL==> " +  replacedLocator);
         return replacedLocator;
     }
+
+//
+//    private static String findAndReplaceXpath(String locEntries, String leftEntry, String rightEntry ){
+//        System.out.println("=========> locEntries=> " +  locEntries + "=========> leftEntry=> " +  leftEntry + "=========> rightEntry=> " +  rightEntry);
+//        String replacedLocator = "[";
+//
+//        if (locEntries.trim().startsWith("[") && locEntries.trim().endsWith("]")) {
+////            leftEntry = leftEntry.replaceAll("\"","").trim();
+////            locEntries = locEntries.substring(1);
+////            locEntries = locEntries.substring(0, locEntries.length() - 1);
+//            System.out.println("=========> locEntries - BEFORE==> " +  locEntries );
+////            locEntries = locEntries.substring(1).trim(); // Remove the first character - "["
+////            leftEntry = leftEntry.substring(0, leftEntry.length() - 1).trim(); // Remove the last character - "]"
+//            locEntries = locEntries.replaceAll("\\s*,\\s*", ",").trim();
+//            locEntries = locEntries.substring(1, locEntries.length() - 1).trim(); // Removing first and last [] square brackets
+//            locEntries = locEntries.substring(1, locEntries.length() - 1).trim(); // Removing first and last double quotes\
+//            System.out.println("=========> locEntries - AFTER==> " +  locEntries );
+//            if (leftEntry != null && leftEntry.length() > 2) {
+//                leftEntry = leftEntry.substring(1, leftEntry.length() - 1); // Removing first and last double quotes
+//                System.out.println("=========> leftEntry - AFTER==> " +  leftEntry );
+//            }
+//            String[] arrLoc = locEntries.split("\",\"");
+//            int loopCount = 0;
+//            for (String loc: arrLoc) {
+//                loc = loc.trim();
+//                System.out.println("=========> loc - AFTER==> " +  loc);
+//                loopCount++;
+//                if (loc.startsWith("xpath=//")) {
+//                    loc = loc.replace("xpath=",leftEntry);
+//                    loc =  "\"" + loc + "\"";
+////                    loc = loc.substring(0, loc.length() - 1).trim() + rightEntry + "\"";
+////                    replacedLocator = (loopCount > 1) ? replacedLocator + "," + loc : replacedLocator + loc;
+//                }
+////                else {
+////                    replacedLocator = (loopCount > 1) ? replacedLocator + "," + loc : replacedLocator + loc;
+////                }
+//                replacedLocator = (loopCount > 1) ? replacedLocator + "," + loc : replacedLocator + loc;
+//            }
+//            replacedLocator = replacedLocator + "]";
+//        } else {
+//            replacedLocator = locEntries;
+//        }
+//        System.out.println("=========> replacedLocator FINAL==> " +  replacedLocator);
+//        return replacedLocator;
+//    }
 
 
 }
