@@ -17,7 +17,7 @@ public class UtilNricSingapore {
 
         // Validate prefix
         if (!prefix.equals("S") && !prefix.equals("T") && !prefix.equals("F") && !prefix.equals("G")) {
-            System.out.println("NULL");
+            System.out.println("[ERROR] => NRIC => Prefix should start with S, T, F or G");
             return null; // Exit early as the prefix is invalid
         }
 
