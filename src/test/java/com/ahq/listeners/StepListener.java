@@ -134,8 +134,10 @@ public class StepListener implements QAFTestStepListener {
 
     private String cleanLocatorParameter(String string) {
         String[] splitString = string.split("\\.");
-        String elementType = splitString[2];
-        String element = splitString[3];
+        int lenOfSplitString = splitString.length;
+        String elementType = (lenOfSplitString > 2) ? splitString[2] : "";
+        String element = (lenOfSplitString > 3) ? splitString[3] : "";
+//        String element =  splitString[3];
         return element + " (" + elementType + ")";
     }
 
