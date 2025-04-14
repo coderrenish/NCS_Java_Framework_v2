@@ -8,6 +8,7 @@ import io.cucumber.java.en.And;
 import javax.swing.text.Utilities;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,6 +24,28 @@ public class Utils {
         String NRIC = Utils.nric_singapore_generate(type, age);
         BrowserGlobal.iStoreValueIntoVariable(NRIC, varName);
     }
+
+    @QAFTestStep(description = "Utils: Generate Singapore NRIC for a citizen with type {0} and year {1} into variable {2}")
+    @And("Utils: Generate Singapore NRIC for a citizen with type {string} and year {string} into variable {string}")
+    public static void generateSingaporeNricForCitizenToVar_Utils(String type, String year, String varName) {
+        String NRIC = UtilNricSingapore.generateByYearAndPrefix(type, Integer.parseInt(year),false);
+        BrowserGlobal.iStoreValueIntoVariable(NRIC, varName);
+    }
+
+    @QAFTestStep(description = "Utils: Generate Singapore NRIC for a foreigner with type {0} and year {1} into variable {2}")
+    @And("Utils: Generate Singapore NRIC for a foreigner with type {string} and year {string} into variable {string}")
+    public static void generateSingaporeNricForForeignerToVar_Utils(String type, String year, String varName) {
+        String NRIC = UtilNricSingapore.generateByYearAndPrefix(type, Integer.parseInt(year),true);
+        BrowserGlobal.iStoreValueIntoVariable(NRIC, varName);
+    }
+
+    @QAFTestStep(description = "Utils: Get year from Singapore NRIC {0} into variable {1}")
+    @And("Utils: Get year from Singapore NRIC {string} into variable {string}")
+    public static void getYearFromSingaporeNricToVar_Utils(String nric, String varName) {
+        String NRIC = Objects.requireNonNull(UtilNricSingapore.getYearFromNRIC(nric)).toString();
+        BrowserGlobal.iStoreValueIntoVariable(NRIC, varName);
+    }
+
 
     @QAFTestStep(description = "Utils: Generate Singapore Vehicle Registration Number with Prefix {0} into variable {1}")
     @And("Utils: Generate Singapore Vehicle Registration Number with Prefix {string} into variable {string}")
@@ -58,28 +81,28 @@ public class Utils {
     }
     @QAFTestStep(description = "Utils: Generate first day of the current month in format {0} into variable {1}")
     @And("Utils: Generate first day of the current month in format {string} into variable {string}")
-    public static void generateFirstDayOfCurrentMonth_Utils(String varDateFormat, String varName) {
+    public static void generateFirstDayOfCurrentMonthInDateFormatToVar_Utils(String varDateFormat, String varName) {
         String date = UtilDateTime.firstDayOfCurrentMonth(varDateFormat);
         BrowserGlobal.iStoreValueIntoVariable(date, varName);
     }
 
     @QAFTestStep(description = "Utils: Generate last day of the current month in format {0} into variable {1}")
     @And("Utils: Generate last day of the current month in format {string} into variable {string}")
-    public static void generateLastDayOfCurrentMonth_Utils(String varDateFormat,String varName) {
+    public static void generateLastDayOfCurrentMonthInDateFormatToVar_Utils(String varDateFormat,String varName) {
         String date = UtilDateTime.lastDayOfCurrentMonth(varDateFormat);
         BrowserGlobal.iStoreValueIntoVariable(date, varName);
     }
 
     @QAFTestStep(description = "Utils: Generate first day of the next month in format {0} into variable {1}")
     @And("Utils: Generate first day of the next month in format {string} into variable {string}")
-    public static void generateFirstDayOfNextMonth_Utils(String varDateFormat,String varName) {
+    public static void generateFirstDayOfNextMonthInDateFormatToVar_Utils(String varDateFormat,String varName) {
         String date = UtilDateTime.firstDayOfNextMonth(varDateFormat);
         BrowserGlobal.iStoreValueIntoVariable(date, varName);
     }
 
     @QAFTestStep(description = "Utils: Generate last day of the next month in format {0} into variable {1}")
     @And("Utils: Generate last day of the next month in format {string} into variable {string}")
-    public static void generateLastDayOfNextMonth_Utils(String varDateFormat,String varName) {
+    public static void generateLastDayOfNextMonthInDateFormatToVar_Utils(String varDateFormat,String varName) {
         String date = UtilDateTime.lastDayOfNextMonth(varDateFormat);
         BrowserGlobal.iStoreValueIntoVariable(date, varName);
     }
