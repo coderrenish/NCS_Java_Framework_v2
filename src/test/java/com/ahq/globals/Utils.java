@@ -5,6 +5,7 @@ import com.ahq.globals.utilities.*;
 import com.qmetry.qaf.automation.step.QAFTestStep;
 import io.cucumber.java.en.And;
 
+import javax.swing.text.Utilities;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -21,6 +22,13 @@ public class Utils {
     public static void generateSingaporeNricToVar_Utils(String type, String age, String varName) {
         String NRIC = Utils.nric_singapore_generate(type, age);
         BrowserGlobal.iStoreValueIntoVariable(NRIC, varName);
+    }
+
+    @QAFTestStep(description = "Utils: Generate Singapore Vehicle Registration Number with Prefix {0} into variable {1}")
+    @And("Utils: Generate Singapore Vehicle Registration Number with Prefix {string} into variable {string}")
+    public static void generateSingaporeVehicleRegistrationNumber_Utils(String prefix, String varName) {
+        String VEHICLE_REG = UtilVehicleReg.generate("SINGAPORE",prefix);
+        BrowserGlobal.iStoreValueIntoVariable(VEHICLE_REG, varName);
     }
 
     @QAFTestStep(description = "Utils: Encrypt password {0} and print")
@@ -48,6 +56,36 @@ public class Utils {
     public static void writeToExcel_Utils(String file, String sheet, String cellData) throws Exception {
         utilsExcel.writeToExcel(file,sheet,cellData);
     }
+    @QAFTestStep(description = "Utils: Generate first day of the current month in format {0} into variable {1}")
+    @And("Utils: Generate first day of the current month in format {string} into variable {string}")
+    public static void generateFirstDayOfCurrentMonth_Utils(String varDateFormat, String varName) {
+        String date = UtilDateTime.firstDayOfCurrentMonth(varDateFormat);
+        BrowserGlobal.iStoreValueIntoVariable(date, varName);
+    }
+
+    @QAFTestStep(description = "Utils: Generate last day of the current month in format {0} into variable {1}")
+    @And("Utils: Generate last day of the current month in format {string} into variable {string}")
+    public static void generateLastDayOfCurrentMonth_Utils(String varDateFormat,String varName) {
+        String date = UtilDateTime.lastDayOfCurrentMonth(varDateFormat);
+        BrowserGlobal.iStoreValueIntoVariable(date, varName);
+    }
+
+    @QAFTestStep(description = "Utils: Generate first day of the next month in format {0} into variable {1}")
+    @And("Utils: Generate first day of the next month in format {string} into variable {string}")
+    public static void generateFirstDayOfNextMonth_Utils(String varDateFormat,String varName) {
+        String date = UtilDateTime.firstDayOfNextMonth(varDateFormat);
+        BrowserGlobal.iStoreValueIntoVariable(date, varName);
+    }
+
+    @QAFTestStep(description = "Utils: Generate last day of the next month in format {0} into variable {1}")
+    @And("Utils: Generate last day of the next month in format {string} into variable {string}")
+    public static void generateLastDayOfNextMonth_Utils(String varDateFormat,String varName) {
+        String date = UtilDateTime.lastDayOfNextMonth(varDateFormat);
+        BrowserGlobal.iStoreValueIntoVariable(date, varName);
+    }
+
+
+    public static String generateFirstDayOfCurrentMonthWithDateFormat_Utils(String argDateFormat) { return UtilDateTime.firstDayOfCurrentMonth(argDateFormat);}
 
     public static String nric_singapore_generate(String prefix, String ageStr) { return UtilNricSingapore.generate(prefix, ageStr); }
     //    public static String nric_singapore_validate(String nric) { return UtilNricSingapore.validate(nric); } // TO BE DEVELOPED

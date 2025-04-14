@@ -63,7 +63,53 @@ public class UtilDateTime {
         }
         return currentDate.format(formatter);
     }
-    
+
+
+    /**
+     * Returns the first day of the current month in the given format.
+     * @param format The date format pattern (e.g., "dd/MM/yyyy").
+     */
+    public static String firstDayOfCurrentMonth(String format) {
+        LocalDate today = LocalDate.now();
+        LocalDate firstDay = today.withDayOfMonth(1);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
+        return firstDay.format(formatter);
+    }
+
+    /**
+     * Returns the last day of the current month in the given format.
+     * @param format The date format pattern (e.g., "dd/MM/yyyy").
+     */
+    public static String lastDayOfCurrentMonth(String format) {
+        LocalDate today = LocalDate.now();
+        LocalDate lastDay = today.withDayOfMonth(today.lengthOfMonth());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
+        return lastDay.format(formatter);
+    }
+
+    /**
+     * Returns the first day of the next month in the given format.
+     * @param format The date format pattern (e.g., "dd/MM/yyyy").
+     */
+    public static String firstDayOfNextMonth(String format) {
+        LocalDate today = LocalDate.now();
+        LocalDate firstDayNext = today.plusMonths(1).withDayOfMonth(1);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
+        return firstDayNext.format(formatter);
+    }
+
+    /**
+     * Returns the last day of the next month in the given format.
+     * @param format The date format pattern (e.g., "dd/MM/yyyy").
+     */
+    public static String lastDayOfNextMonth(String format) {
+        LocalDate today = LocalDate.now();
+        LocalDate nextMonth = today.plusMonths(1);
+        LocalDate lastDayNext = nextMonth.withDayOfMonth(nextMonth.lengthOfMonth());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format);
+        return lastDayNext.format(formatter);
+    }
+
     /**
      * Returns Current Data & Time with default Format
      */
